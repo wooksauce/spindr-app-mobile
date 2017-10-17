@@ -1,0 +1,3 @@
+rootProject.name = 'spindr_app_mobile'
+
+include ':app'
