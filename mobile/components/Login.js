@@ -4,44 +4,61 @@ import {
   Text, 
   StyleSheet,
   Button,
-  TouchableOpacity
+  Image,
  } from 'react-native';
-//  import AWS from ('aws-sdk/dist/aws-sdk-react-native');
-import FBSDK, { LoginManager, LoginButton } from 'react-native-fbsdk';
-import AWS from 'aws-sdk';
+import FBSDK, { LoginButton, AccessToken } from 'react-native-fbsdk';
+import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 
 
 class Login extends Component {
-  // _fbAuth(){
-  //   LoginManager.logInWithReadPermissions(['public_profile']).then(
-  //     function(result) {
-  //       if (result.isCancelled) {
-  //         alert('Login was cancelled');
-  //       } else {
-  //         alert('Login was successful with permissions: '
-  //           + result.grantedPermissions.toString());
-  //       }
-  //     },
-  //     function(error) {
-  //       alert('Login failed with error: ' + error);
-  //     }
-  //   );
-  // }
+
+  componentDidMount() {
+    
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>FACEBOOK SIGNIN</Text>
+      <Image
+          style={styles.logo}
+          source={require('../images/Logo.png')}
+        />
+      <Text>FACEBOOK SIGNIN</Text>
       <LoginButton 
         publishPermissions={["publish_actions"]}
         onLoginFinished={
           (error, result) => {
             if (error) {
-              alert("Login failed with error: " + error);
+              alert("Login failed with error: " + error.message);
+              console.log("Login failed with error: " + error.message);
             } else if (result.isCancelled) {
               alert("Login was cancelled");
+              console.log("Login was cancelled");
             } else {
+              AccessToken.getCurrentAccessToken()
+              .then(
+                (data) => {
+                  alert(data.accessToken.toString())
+                  console.log(data.accessToken.toString())
+
+                  AWS.config.region = 'us-west-2'; // Region
+                  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                      IdentityPoolId: 'us-west-2:1c390ad4-2b5c-4db5-ba78-4f2d316961a7',
+                      Logins: {
+                        'graph.facebook.com': data.accessToken
+                      }
+                  });
+                }
+              ).then(() => {
+                AWS.config.credentials.get(function() {
+                  console.log('AWS Session Token: ', AWS.config.credentials.sessionToken);
+                  console.log('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
+                  alert('AWS Session Token: ', AWS.config.credentials.sessionToken);
+                  alert('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
+                })
+              })
               alert("Login was successful with permissions: " + result.grantedPermissions)
+              console.log("Login was successful with permissions: " + result.grantedPermissions)
             }
           }
         }
@@ -60,6 +77,11 @@ const styles = StyleSheet.create({
   },
   loginTitle: {
     alignItems: 'center',
+  },
+  logo: {
+    alignItems: 'center',
+    width: 250, 
+    height: 250
   }
 });
 
