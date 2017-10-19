@@ -11,9 +11,34 @@ import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isReady: false
+    }
+  }
 
   componentDidMount() {
-    
+    AccessToken.getCurrentAccessToken()
+    .then(
+      (data) => {
+        console.log(data.accessToken.toString())
+        AWS.config.region = 'us-west-2'; // Region
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'us-west-2:1c390ad4-2b5c-4db5-ba78-4f2d316961a7',
+            Logins: {
+              'graph.facebook.com': data.accessToken
+            }
+        });
+      }
+    ).then(() => {
+      AWS.config.credentials.get(function() {
+        console.log('AWS Session Token: ', AWS.config.credentials.sessionToken);
+        console.log('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
+        // alert('AWS Session Token: ', AWS.config.credentials.sessionToken);
+        // alert('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
+      })
+    })
   }
 
   render() {
@@ -33,14 +58,13 @@ class Login extends Component {
               console.log("Login failed with error: " + error.message);
             } else if (result.isCancelled) {
               alert("Login was cancelled");
-              console.log("Login was cancelled");
+              console.log("Login was cancelled"); 
             } else {
               AccessToken.getCurrentAccessToken()
               .then(
                 (data) => {
                   alert(data.accessToken.toString())
                   console.log(data.accessToken.toString())
-
                   AWS.config.region = 'us-west-2'; // Region
                   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                       IdentityPoolId: 'us-west-2:1c390ad4-2b5c-4db5-ba78-4f2d316961a7',
