@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 style.use('ggplot')
 import numpy as np
+import random
 from sklearn.cluster import KMeans
 
 userA = ['m', 10, ['a', 'c', 'e', 'g', 't','m'], 5, {'a':0.3, 'b':0.15, 'c':0.05, 'e':0.2, 't':0.1, 'n':0.09, 'p':0.07, 'x':0.04}]
@@ -26,12 +27,12 @@ userL = ['f', 10, ['c', 'f', 'h', 'i', 'j', 'p', 'u', 'w'], 5, {'a':0.1, 'd':0.2
 userN = ['f', 4, ['b', 'g', 'k', 'm', 'o', 's', 'v'], 5, {'e':0.08, 'i':0.15, 'j':0.05, 'k':0.14, 'l':0.20, 'o':0.16, 's':0.05, 'u':0.12, 'y':0.05}]
 userP = ['f', 6, ['c', 'e', 'g', 'h', 'i', 'o', 'u'], 3, {'a':0.08, 'b':0.10, 'e':0.05, 'k':0.2, 'n':0.12, 'q':0.20, 'r':0.12, 'u':0.08, 'w':0.05}]
 userR = ['f', 8, ['e', 'f', 'h', 'l', 'n', 'p', 'q'], 4.5, {'a':0.1, 'e':0.2, 'f':0.05, 'n':0.12, 's':0.23, 'v':0.13, 'y':0.17}]
-userV = ['f', 10, ['a', 'b', 'f', 'g', 'k', 'l', 'm', 'n', 'p'], 3, {'a':0.1, 'c':0.15, 'f':0.05, 'g':0.12, 'j':0.15, 'k':0.05 'n':0.08, 'o':0.1, 's':1.2, 't':0.08}]
-userW = ['f', 4, ['b', 'd', 'h', 'k', 'l', 'm', 'n', 'q', 'r'], 14, {'c':0.1, 'd':0.15, 'g':0.05, 'i':0.08, 'k':0.2, 'm':0.04 'n':0.08, 'p':0.1, 'q':1.2, 'y':0.08}]
-userX = ['f', 5, ['a', 'b', 'c', 'i', 'l', 'o', 'q', 'r', 'w'], 7, {'a':0.1, 'b':0.15, 'e':0.05, 'h':0.12, 'j':0.15, 'l':0.05 'q':0.08, 'r':0.1, 'w':1.2, 'x':0.08}]
+userV = ['f', 10, ['a', 'b', 'f', 'g', 'k', 'l', 'm', 'n', 'p'], 3, {'a':0.1, 'c':0.15, 'f':0.05, 'g':0.12, 'j':0.15, 'k':0.05, 'n':0.08, 'o':0.1, 's':1.2, 't':0.08}]
+userW = ['f', 4, ['b', 'd', 'h', 'k', 'l', 'm', 'n', 'q', 'r'], 14, {'c':0.1, 'd':0.15, 'g':0.05, 'i':0.08, 'k':0.2, 'm':0.04, 'n':0.08, 'p':0.1, 'q':1.2, 'y':0.08}]
+userX = ['f', 5, ['a', 'b', 'c', 'i', 'l', 'o', 'q', 'r', 'w'], 7, {'a':0.1, 'b':0.15, 'e':0.05, 'h':0.12, 'j':0.15, 'l':0.05, 'q':0.08, 'r':0.1, 'w':1.2, 'x':0.08}]
 
 
-queue = [userA, userB, userC, userD, userE, userF, userG, userH, userI, userJ, userK, userL, userM, userN]
+queue = [userA, userB, userC, userD, userE, userF, userG, userH, userI, userJ, userK, userL, userM, userN, userO, userP, userQ, userR, userS, userT, userU, userV, userW, userX]
 
 
 #for one male:
@@ -39,9 +40,12 @@ for user in queue:
   if user[0] == 'm':
     print (user)
     females = []   #all the females in the graph
+    females_idx = []
 
-    for other_user in queue:
+    for i in range(len(queue)):
+      other_user = queue[i]
       if other_user[0] == 'f':
+        females_idx.append(i)
         female = []   #individual female
         #x coord:
         female.insert(0, (16 - abs(other_user[3] - user[1])) / 16)
@@ -59,19 +63,49 @@ for user in queue:
 
     X = np.array(females)
 
-    print(females)
+    # print(females)
     
-    #plt.scatter(X[:,0], X[:,1], s=20)
-    #plt.show()
+    # plt.scatter(X[:,0], X[:,1], s=20)
+    # plt.show()
     
     clf = KMeans(n_clusters=4)
     clf.fit(X)
     centroids = clf.cluster_centers_
     labels = clf.labels_
 
+    # find the index of the centroid with the highest x*y value
+    best_centroid_val = centroids[0][0] * centroids[0][1]
+    best_centroid_idx = 0
+    for j in range(1, len(centroids)):
+      if centroids[j][0] * centroids[j][1] > best_centroid_val:
+        best_centroid_val = centroids[j][0] * centroids[j][1]
+        best_centroid_idx = j
+
+    print (best_centroid_val, best_centroid_idx)
+
+
     colors = ['g.', 'r.', 'c.', 'b.']
 
-    for i in range (len(X)):
-      plt.plot(X[i][0], X[i][1], colors[labels[i]], markersize = 10)
+    # print (labels)
+    for centroid in centroids:
+      print (centroid)
+    for k in range (len(X)):
+      plt.plot(X[k][0], X[k][1], colors[labels[k]], markersize = 10)
     plt.scatter(centroids[:,0], centroids[:,1], marker='x', s=50, linewidths = 5)
+    plt.ylim([0,1])
+    plt.xlim([0,1])
     plt.show()
+
+    # in the queue, randomly pick a user from users that have the index as their labels
+    idx_of_user_in_cluster = []
+    for n in range(len(labels)):
+      if labels[n] == best_centroid_idx:
+        idx_of_user_in_cluster.append(n)
+
+    print (idx_of_user_in_cluster)
+    random_idx = random.choice(idx_of_user_in_cluster)
+    next_user_idx = females_idx[random_idx]
+    print (queue[next_user_idx])
+
+print (females)
+print (females_idx)
