@@ -34,7 +34,7 @@ userX = ['f', 5, ['a', 'b', 'c', 'i', 'l', 'o', 'q', 'r', 'w'], 7, {'a':0.1, 'b'
 
 queue = [userA, userB, userC, userD, userE, userF, userG, userH, userI, userJ, userK, userL, userM, userN, userO, userP, userQ, userR, userS, userT, userU, userV, userW, userX]
 
-"""
+
 
 def make_room(queue, room_size):
   # pick a random person from queue
@@ -44,20 +44,10 @@ def make_room(queue, room_size):
   del queue[random_queue_idx]
   
   # put people in the room
-
-
-  fn add_person(queue, starting_person)
-    stop when room size == room_size
-    start with the starting_person
-    find a potential match
-    put the match in the room
-    remove the match from the queue
-    add_person(queue, starting_person)
-
-"""
+  return add_person(queue, room, room_size, room[len(room) - 1])
 
 #for one male:
-def add_person(queue, user, room, room_size):
+def add_person(queue, room, room_size, user):
   if len(room) == room_size:
     return room
   else:
@@ -109,13 +99,12 @@ def add_person(queue, user, room, room_size):
 
     # print (best_centroid_val, best_centroid_idx)
 
-
     # colors = ['g.', 'r.', 'c.', 'b.']
 
     # print (labels)
 
     # for centroid in centroids:
-    #   print (centroid)
+    #   #print (centroid)
     # for k in range (len(X)):
     #   plt.plot(X[k][0], X[k][1], colors[labels[k]], markersize = 10)
     # plt.scatter(centroids[:,0], centroids[:,1], marker='x', s=50, linewidths = 5)
@@ -132,7 +121,19 @@ def add_person(queue, user, room, room_size):
     # print (idx_of_user_in_cluster)
     random_idx = random.choice(idx_of_users_in_cluster)
     next_user_idx = potentials_idx[random_idx]
-    
 
-print (potentials)
-print (potentials_idx)
+    # print (queue[next_user_idx])
+
+    # add the user to the room
+    room.append(queue[next_user_idx])
+
+    # remove the user from the queue
+    del queue[next_user_idx]
+
+    # repeat the process of adding users
+    return add_person(queue, room, room_size, room[len(room) - 1])
+
+# print (potentials)
+# print (potentials_idx)
+
+# print (make_room(queue, 6))
