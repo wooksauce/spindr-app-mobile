@@ -34,41 +34,67 @@ userX = ['f', 5, ['a', 'b', 'c', 'i', 'l', 'o', 'q', 'r', 'w'], 7, {'a':0.1, 'b'
 
 queue = [userA, userB, userC, userD, userE, userF, userG, userH, userI, userJ, userK, userL, userM, userN, userO, userP, userQ, userR, userS, userT, userU, userV, userW, userX]
 
+"""
+
+def make_room(queue, room_size):
+  # pick a random person from queue
+  random_queue_idx = random.choice(range(len(queue)))
+  room = []   # do we need to persist the room for anything?
+  room.append(queue[random_queue_idx])
+  del queue[random_queue_idx]
+  
+  # put people in the room
+
+
+  fn add_person(queue, starting_person)
+    stop when room size == room_size
+    start with the starting_person
+    find a potential match
+    put the match in the room
+    remove the match from the queue
+    add_person(queue, starting_person)
+
+"""
 
 #for one male:
-for user in queue:
-  if user[0] == 'm':
-    print (user)
-    females = []   #all the females in the graph
-    females_idx = []
+def add_person(queue, user, room, room_size):
+  if len(room) == room_size:
+    return room
+  else:
+    # print (user)
+    sex = user[0]
+    potentials = []   #all the potentials in the graph
+    potentials_idx = []
 
-    for i in range(len(queue)):
-      other_user = queue[i]
-      if other_user[0] == 'f':
-        females_idx.append(i)
-        female = []   #individual female
+    for queue_i in range(len(queue)):
+      other_user = queue[queue_i]
+      if other_user[0] != sex:
+        potentials_idx.append(queue_i)
+        potential = []   #individual person
         #x coord:
-        female.insert(0, (16 - abs(other_user[3] - user[1])) / 16)
+        potential.insert(0, (16 - abs(other_user[3] - user[1])) / 16)
 
         #y coord:
         interest_score = 0
         for interest in other_user[2]:
           if interest in user[4]:
             interest_score += user[4][interest]
-        female.insert(1, interest_score)
+        potential.insert(1, interest_score)
 
-        #put female into females
-        females.append(female)
-        #print (female)
+        #put potential into potentials
+        potentials.append(potential)
+        #print (potential)
 
-    X = np.array(females)
+    X = np.array(potentials)
+    # print(potentials)
 
-    # print(females)
-    
-    # plt.scatter(X[:,0], X[:,1], s=20)
-    # plt.show()
-    
-    clf = KMeans(n_clusters=4)
+    #define num of clusters here later
+    if len(potentials) >= 4:
+      cluster_num = 4
+    else:
+      cluster_num = len(potentials)
+
+    clf = KMeans(n_clusters=cluster_num)
     clf.fit(X)
     centroids = clf.cluster_centers_
     labels = clf.labels_
@@ -81,31 +107,32 @@ for user in queue:
         best_centroid_val = centroids[j][0] * centroids[j][1]
         best_centroid_idx = j
 
-    print (best_centroid_val, best_centroid_idx)
+    # print (best_centroid_val, best_centroid_idx)
 
 
-    colors = ['g.', 'r.', 'c.', 'b.']
+    # colors = ['g.', 'r.', 'c.', 'b.']
 
     # print (labels)
-    for centroid in centroids:
-      print (centroid)
-    for k in range (len(X)):
-      plt.plot(X[k][0], X[k][1], colors[labels[k]], markersize = 10)
-    plt.scatter(centroids[:,0], centroids[:,1], marker='x', s=50, linewidths = 5)
-    plt.ylim([0,1])
-    plt.xlim([0,1])
-    plt.show()
+
+    # for centroid in centroids:
+    #   print (centroid)
+    # for k in range (len(X)):
+    #   plt.plot(X[k][0], X[k][1], colors[labels[k]], markersize = 10)
+    # plt.scatter(centroids[:,0], centroids[:,1], marker='x', s=50, linewidths = 5)
+    # plt.ylim([0,1])
+    # plt.xlim([0,1])
+    # plt.show()
 
     # in the queue, randomly pick a user from users that have the index as their labels
-    idx_of_user_in_cluster = []
+    idx_of_users_in_cluster = []
     for n in range(len(labels)):
       if labels[n] == best_centroid_idx:
-        idx_of_user_in_cluster.append(n)
+        idx_of_users_in_cluster.append(n)
 
-    print (idx_of_user_in_cluster)
-    random_idx = random.choice(idx_of_user_in_cluster)
-    next_user_idx = females_idx[random_idx]
-    print (queue[next_user_idx])
+    # print (idx_of_user_in_cluster)
+    random_idx = random.choice(idx_of_users_in_cluster)
+    next_user_idx = potentials_idx[random_idx]
+    
 
-print (females)
-print (females_idx)
+print (potentials)
+print (potentials_idx)
