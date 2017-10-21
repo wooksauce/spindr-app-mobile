@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet,
-  Button,
-  Image,
- } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import FBSDK, { LoginButton, AccessToken } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 
@@ -45,9 +39,9 @@ class Login extends Component {
     return (
       <View style={styles.container}>
       <Image
-          style={styles.logo}
-          source={require('../images/Logo.png')}
-        />
+        style={styles.logo}
+        source={require('../images/Logo.png')}
+      />
       <Text>FACEBOOK SIGNIN</Text>
       <LoginButton 
         publishPermissions={["publish_actions"]}
