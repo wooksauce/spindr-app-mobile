@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet,
-  Button,
-  Image,
- } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import FBSDK, { LoginButton, AccessToken } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 
@@ -13,9 +7,6 @@ import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isReady: false
-    }
   }
 
   componentDidMount() {
@@ -42,12 +33,15 @@ class Login extends Component {
   }
 
   render() {
+    // console.log('In Login, Props:', this.props.navigation.navigate);
+    const { navigate } = this.props.navigation;
+    console.log('Navigate:', navigate);
     return (
       <View style={styles.container}>
       <Image
-          style={styles.logo}
-          source={require('../images/Logo.png')}
-        />
+        style={styles.logo}
+        source={require('../images/Logo.png')}
+      />
       <Text>FACEBOOK SIGNIN</Text>
       <LoginButton 
         publishPermissions={["publish_actions"]}
@@ -87,6 +81,10 @@ class Login extends Component {
           }
         }
         onLogoutFinished={() => alert("User logged out")}/>
+        <Text>Testing HAHAHAHAH</Text>
+        <Button 
+          title='Mark LOL'
+          onPress = {() => navigate('Dummy')} />
     </View>
     );
   }

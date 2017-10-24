@@ -3,13 +3,16 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 import Loading from './Loading';
 import Login from './Login';
 import Main from './Main';
+import Dummy from './Dummy';
 
 class App extends Component {
+
   constructor(props) {
     super(props);
 
@@ -19,6 +22,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('In Home, Props:', this.props);
     if (!this.state.isReady) {
       return (
         <Loading />
@@ -32,7 +36,9 @@ class App extends Component {
     }
 
     return (
-      <Login successfulLogin={this.successfulLogin} />
+        <Login 
+        successfulLogin={this.successfulLogin}
+        navigation={this.props.navigation} />
     );
   }
 }
