@@ -1,39 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import FBSDK, { LoginButton, AccessToken } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 
+import * as authActions from '../actions/authActions';
 
 class Login extends Component {
   constructor(props) {
     super(props);
   }
 
+
   componentDidMount() {
-    AccessToken.getCurrentAccessToken()
-    .then(
-      (data) => {
-        console.log(data.accessToken.toString())
-        AWS.config.region = 'us-west-2'; // Region
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'us-west-2:1c390ad4-2b5c-4db5-ba78-4f2d316961a7',
-            Logins: {
-              'graph.facebook.com': data.accessToken
-            }
-        });
-      }
-    ).then(() => {
-      AWS.config.credentials.get(function() {
-        console.log('AWS Session Token: ', AWS.config.credentials.sessionToken);
-        console.log('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
-        // alert('AWS Session Token: ', AWS.config.credentials.sessionToken);
-        // alert('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
-      })
-    })
+    this.props.actions.getToken();
   }
+
 
   render() {
     // console.log('In Login, Props:', this.props.navigation.navigate);
+    console.log('In Login, Props:', this.props);
     const { navigate } = this.props.navigation;
     console.log('Navigate:', navigate);
     return (
@@ -48,39 +35,25 @@ class Login extends Component {
         onLoginFinished={
           (error, result) => {
             if (error) {
-              alert("Login failed with error: " + error.message);
               console.log("Login failed with error: " + error.message);
             } else if (result.isCancelled) {
-              alert("Login was cancelled");
               console.log("Login was cancelled"); 
             } else {
-              AccessToken.getCurrentAccessToken()
-              .then(
-                (data) => {
-                  alert(data.accessToken.toString())
-                  console.log(data.accessToken.toString())
-                  AWS.config.region = 'us-west-2'; // Region
-                  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                      IdentityPoolId: 'us-west-2:1c390ad4-2b5c-4db5-ba78-4f2d316961a7',
-                      Logins: {
-                        'graph.facebook.com': data.accessToken
-                      }
-                  });
-                }
-              ).then(() => {
-                AWS.config.credentials.get(function() {
-                  console.log('AWS Session Token: ', AWS.config.credentials.sessionToken);
-                  console.log('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
-                  alert('AWS Session Token: ', AWS.config.credentials.sessionToken);
-                  alert('AWS Access Key Id: ', AWS.config.credentials.accessKeyId);
-                })
-              })
-              alert("Login was successful with permissions: " + result.grantedPermissions)
+              this.props.actions.getToken();
+              this.props.actions.getFbUserInfo();
               console.log("Login was successful with permissions: " + result.grantedPermissions)
             }
           }
         }
-        onLogoutFinished={() => alert("User logged out")}/>
+        onLogoutFinished={
+          (error, result) => {
+            if (error) {
+              console.log("Logout failed with error: " + error.message);
+            } else {
+              this.props.actions.logout();
+            }
+          }
+        }/>
         <Text>Testing HAHAHAHAH</Text>
         <Button 
           title='Mark LOL'
@@ -89,7 +62,6 @@ class Login extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,4 +79,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+const loginDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(authActions, dispatch)
+  }
+};
+
+export default connect(null, loginDispatch)(Login);
+
