@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 
-import Nav from './navReducer';
+import Auth from './authReducers';
+import Nav from './navReducers';
 
 const appReducer = combineReducers({
+  Auth, 
   nav: Nav
 });
 

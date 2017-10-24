@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   Platform,
   StyleSheet,
@@ -10,31 +12,27 @@ import Loading from './Loading';
 import Login from './Login';
 import Main from './Main';
 import Dummy from './Dummy';
+import * as authActions from '../actions/authActions';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      isReady: true
-    }
   }
+
 
   render() {
     console.log('In Home, Props:', this.props);
-    if (!this.state.isReady) {
+    if (!this.props.isReady) {
       return (
         <Loading />
       );
     }
-
     if (this.props.username) {
       return (
         <Main />
       );
     }
-
     return (
         <Login 
         successfulLogin={this.successfulLogin}
@@ -42,9 +40,6 @@ class App extends Component {
     );
   }
 }
-
-export default App;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -58,3 +53,22 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
+
+
+const mainState = (store) => {
+  console.log('STORE IN MAINSTATE: ', store)
+  return {
+    username: store.Auth.username,
+    userToken: store.Auth.userToken,
+    isReady: true
+  }
+}
+
+const appDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(authActions, dispatch)
+  }
+}
+
+export default connect(mainState, appDispatch)(App)
