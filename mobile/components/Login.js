@@ -7,9 +7,6 @@ import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isReady: false
-    }
   }
 
   componentDidMount() {
@@ -36,6 +33,9 @@ class Login extends Component {
   }
 
   render() {
+    // console.log('In Login, Props:', this.props.navigation.navigate);
+    const { navigate } = this.props.navigation;
+    console.log('Navigate:', navigate);
     return (
       <View style={styles.container}>
       <Image
@@ -81,6 +81,10 @@ class Login extends Component {
           }
         }
         onLogoutFinished={() => alert("User logged out")}/>
+        <Text>Testing HAHAHAHAH</Text>
+        <Button 
+          title='Mark LOL'
+          onPress = {() => navigate('Dummy')} />
     </View>
     );
   }

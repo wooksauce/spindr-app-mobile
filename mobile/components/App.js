@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Button
+} from 'react-native';
 import Loading from './Loading';
 import Login from './Login';
 import Main from './Main';
+import Dummy from './Dummy';
 
-class Landing extends Component {
+class App extends Component {
+
   constructor(props) {
     super(props);
+
     this.state = {
       isReady: true
     }
   }
 
   render() {
+    console.log('In Home, Props:', this.props);
     if (!this.state.isReady) {
       return (
         <Loading />
@@ -26,12 +36,14 @@ class Landing extends Component {
     }
 
     return (
-      <Login successfulLogin={this.successfulLogin} />
+        <Login 
+        successfulLogin={this.successfulLogin}
+        navigation={this.props.navigation} />
     );
   }
 }
 
-export default Landing;
+export default App;
 
 const styles = StyleSheet.create({
   container: {
