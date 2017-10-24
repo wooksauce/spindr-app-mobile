@@ -10,9 +10,13 @@ def roomGen():
   if request.method == 'POST':
     req_data = request.get_json()
     name = req_data['name']
+    socialScore = req_data['socialScore']
+    interests = req_data['interests']
+    weighted = req_data['partnerWeightedInterests']
     #return room_testing.make_room(request.body, 4)
 
-    return name
+    return weighted
+  
 
 if __name__ == '__main__':
     app.run()
