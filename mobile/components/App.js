@@ -28,11 +28,6 @@ class App extends Component {
         <Loading />
       );
     }
-    if (this.props.username) {
-      return (
-        <Main />
-      );
-    }
     return (
         <Login 
         successfulLogin={this.successfulLogin}
@@ -61,6 +56,8 @@ const mainState = (store) => {
   return {
     username: store.Auth.username,
     userToken: store.Auth.userToken,
+    email: store.Auth.email,
+    picture: store.Auth.picture,
     isReady: true
   }
 }

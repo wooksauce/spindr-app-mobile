@@ -1,5 +1,7 @@
 const initialState = {
-  username: '',
+  username: null,
+  email: null,
+  picture: null,
   userToken: null,
   isReady: null
 }
@@ -9,14 +11,17 @@ const authReducer = (state=initialState, action) => {
 
     case 'USER_LOGIN_SUCCESSFUL': {
       return Object.assign({}, state, {
-        username: action.payload, 
-        isReady: true
+        username: action.payload.name, 
+        email: action.payload.email,
+        picture: action.payload.picture.data.url
       })
     }
 
     case 'USER_LOGOUT_SUCCESSFUL': {
       return Object.assign({}, state, {
-        username: '',
+        username: null,
+        email: null,
+        picture: null,
         userToken: false
       })
     }

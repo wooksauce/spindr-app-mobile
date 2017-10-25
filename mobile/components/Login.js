@@ -31,7 +31,7 @@ class Login extends Component {
       />
       <Text>FACEBOOK SIGNIN</Text>
       <LoginButton 
-        publishPermissions={["publish_actions"]}
+        readPermissions={["email", "public_profile"]}
         onLoginFinished={
           (error, result) => {
             if (error) {
@@ -40,7 +40,8 @@ class Login extends Component {
               console.log("Login was cancelled"); 
             } else {
               this.props.actions.getToken();
-              this.props.actions.getFbUserInfo();
+              {/* this.props.actions.getFbUserInfo(); */}
+              navigate('Main');
               console.log("Login was successful with permissions: " + result.grantedPermissions)
             }
           }
@@ -54,7 +55,6 @@ class Login extends Component {
             }
           }
         }/>
-        <Text>Testing HAHAHAHAH</Text>
         <Button 
           title='Mark LOL'
           onPress = {() => navigate('Dummy')} />
