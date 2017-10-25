@@ -235,7 +235,7 @@ socket.on('leave', function(socketId){
 
 socket.on('connect', function(data) {
   console.log('connect');
-  container.getLocalStream(true, function(stream) {
+  getLocalStream(true, function(stream) {
     localStream = stream;
     container.setState({selfViewSrc: stream.toURL(), status: 'ready', info: 'Please enter or create room ID'});
     // container.setState({selfViewSrc: stream.toURL()});
