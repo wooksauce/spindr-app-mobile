@@ -12,11 +12,9 @@ class Login extends Component {
     super(props);
   }
 
-
   componentDidMount() {
     this.props.actions.getToken();
   }
-
 
   render() {
     // console.log('In Login, Props:', this.props.navigation.navigate);
