@@ -1,7 +1,7 @@
 import FBSDK, { LoginButton, AccessToken, GraphRequest, GraphRequestManager, } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 
-export const getToken = () => {
+export const fbLogin = () => {
   return (dispatch) => {
     //get user token if logged in
     AccessToken.getCurrentAccessToken()

@@ -46,8 +46,7 @@ class Login extends Component {
             } else if (result.isCancelled) {
               console.log("Login was cancelled"); 
             } else {
-              this.props.actions.getToken();
-              {/* this.props.actions.getFbUserInfo(); */}
+              this.props.actions.fbLogin();
               navigate('Main');
               this.resetNavigation('Main');
               console.log("Login was successful with permissions: " + result.grantedPermissions)
