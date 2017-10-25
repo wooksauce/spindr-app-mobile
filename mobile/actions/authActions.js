@@ -25,6 +25,34 @@ export const getToken = () => {
       console.log('dispatching')
       dispatch({type: 'USER_TOKEN_SUCCESSFUL'})
     })
+      .then(() => {
+        responseInfoCallback = (error, result) => {
+          if (error) {
+            alert('Error fetching data: ' + error.toString());
+          } else {
+            console.log('Success fetching data: ' + JSON.stringify(result));
+            dispatch({type: 'USER_LOGIN_SUCCESSFUL', payload: result});
+          }
+        }
+    
+        // Create a graph request asking for user information with a callback to handle the response.
+        const infoRequest = new GraphRequest(
+          '/me',
+          {
+            httpMethod: 'GET',
+            version: 'v2.5',
+            parameters: {
+              'fields': {
+                'string': 'name,picture,email'
+              }
+            }
+          },
+          this.responseInfoCallback
+        );
+        // Start the graph request.
+        new GraphRequestManager().addRequest(infoRequest).start();
+      })
+
   }
 }
 
@@ -32,27 +60,5 @@ export const logout = () => {
   return (dispatch) => {
     dispatch({type: 'USER_LOGOUT_SUCCESSFUL'})
   }
-}
-
-export const getFbUserInfo = () => {
-  return (dispatch) => {
-    //Create response callback.
-    responseInfoCallback = (error, result) => {
-      if (error) {
-        alert('Error fetching data: ' + error.toString());
-      } else {
-        console.log('Success fetching data: ' + result);
-      }
-    }
-
-    // Create a graph request asking for user information with a callback to handle the response.
-    const infoRequest = new GraphRequest(
-      '/me',
-      null,
-      this.responseInfoCallback,
-    );
-    // Start the graph request.
-    new GraphRequestManager().addRequest(infoRequest).start();
-    }
 }
 
