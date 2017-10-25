@@ -28,7 +28,8 @@ const authReducer = (state=initialState, action) => {
 
     case 'USER_TOKEN_SUCCESSFUL': {
       return Object.assign({}, state, {
-        userToken: true
+        userToken: true,
+        isReady: true
       })
     }
 
