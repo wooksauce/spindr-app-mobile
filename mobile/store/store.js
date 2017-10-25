@@ -4,7 +4,6 @@ import promise from 'redux-promise-middleware';
 import { createLogger as logger } from 'redux-logger';
 // import createHistory from 'history/createBrowserHistory';
 
-
 import appReducer from '../reducers';
 
 // const history = createHistory();

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import FBSDK, { LoginButton, AccessToken } from 'react-native-fbsdk';
@@ -12,17 +13,23 @@ class Login extends Component {
     super(props);
   }
 
-
   componentDidMount() {
     this.props.actions.getToken();
   }
 
+  resetNavigation = (targetRoute) => {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: targetRoute }),
+      ],
+    });
+    this.props.navigation.dispatch(resetAction);
+  }
+
 
   render() {
-    // console.log('In Login, Props:', this.props.navigation.navigate);
-    console.log('In Login, Props:', this.props);
     const { navigate } = this.props.navigation;
-    console.log('Navigate:', navigate);
     return (
       <View style={styles.container}>
       <Image
@@ -42,6 +49,7 @@ class Login extends Component {
               this.props.actions.getToken();
               {/* this.props.actions.getFbUserInfo(); */}
               navigate('Main');
+              this.resetNavigation('Main');
               console.log("Login was successful with permissions: " + result.grantedPermissions)
             }
           }

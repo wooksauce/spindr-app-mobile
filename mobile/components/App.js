@@ -20,14 +20,20 @@ class App extends Component {
     super(props);
   }
 
-
   render() {
-    console.log('In Home, Props:', this.props);
     if (!this.props.isReady) {
       return (
         <Loading />
       );
     }
+
+    if (this.props.username) {
+      return (
+        <Main
+        navigation={this.props.navigation} />
+      );
+    }
+
     return (
         <Login 
         successfulLogin={this.successfulLogin}
@@ -52,7 +58,6 @@ const styles = StyleSheet.create({
 
 
 const mainState = (store) => {
-  console.log('STORE IN MAINSTATE: ', store)
   return {
     username: store.Auth.username,
     userToken: store.Auth.userToken,
