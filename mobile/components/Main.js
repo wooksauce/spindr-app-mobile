@@ -11,9 +11,15 @@ class Main extends Component {
     return (
       <View style={styles.container}>
         <Text>Main</Text>
+        <Button
+        title = 'Ready'
+        onPress = {() => console.log('Ready')} />
         <Button 
         title = 'Matches'
         onPress = {() => navigate('Matches')} />
+        <Button 
+        title = 'Profile'
+        onPress = {() => navigate('Profile')} />
       </View>
     );
   }

@@ -6,7 +6,7 @@ import Main from '../components/Main';
 import Profile from '../components/Profile';
 import Matches from '../components/Matches';
 
-import Video from '../components/Video';
+// import Video from '../components/Video';
 const Routes = {
   Home: { screen: App },
   Dummy: { screen: Dummy },
@@ -18,6 +18,6 @@ const Routes = {
   Main: { screen: Main },
   Profile: { screen: Profile },
   Matches: { screen: Matches },
-  Video: { screen: Video }
+  // Video: { screen: Video }
 }
 export default Routes;

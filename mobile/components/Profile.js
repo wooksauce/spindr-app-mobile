@@ -5,7 +5,7 @@ class Profile extends Component {
   render() {
     return (
       <View>
-        <Text>Pics are gonna be shown here</Text>
+        <Text>Profile is gonna be shown here</Text>
         <Text>Say hi to Tara for me Mark</Text>
       </View>
     );
