@@ -9,7 +9,10 @@ const Routes = {
   Home: { screen: App },
   Dummy: { screen: Dummy },
   Loading: { screen: Loading },
-  Login: { screen: Login },
+  Login: { screen: Login,
+    navigationOptions: {
+      headerLeft: null
+    } },
   Main: { screen: Main },
   Profile: { screen: Profile }
 }

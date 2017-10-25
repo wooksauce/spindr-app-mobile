@@ -20,7 +20,6 @@ class App extends Component {
     super(props);
   }
 
-
   render() {
     console.log('In Home, Props:', this.props);
     if (!this.props.isReady) {
