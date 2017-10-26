@@ -1,5 +1,6 @@
 import FBSDK, { LoginButton, AccessToken, GraphRequest, GraphRequestManager, } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
+import axios from 'axios';
 
 export const fbLogin = () => {
   return (dispatch) => {
@@ -30,8 +31,18 @@ export const fbLogin = () => {
           if (error) {
             alert('Error fetching data: ' + error.toString());
           } else {
-            console.log('Success fetching data: ' + JSON.stringify(result));
             dispatch({type: 'USER_LOGIN_SUCCESSFUL', payload: result});
+            axios.post('http://localhost:3000/api/addUser', {
+              name: result.name,
+              email: result.email,
+              sex: result.gender,
+            })
+            .then(({data}) => {
+              dispatch({type: 'USER_DB_FULFILLED', payload: data})
+            })
+            .catch((err) => {
+              console.log('ERROR', err)
+            })
           }
         }
     
@@ -43,7 +54,7 @@ export const fbLogin = () => {
             version: 'v2.5',
             parameters: {
               'fields': {
-                'string': 'name,picture,email'
+                'string': 'name,picture,email,gender,education'
               }
             }
           },
@@ -52,7 +63,6 @@ export const fbLogin = () => {
         // Start the graph request.
         new GraphRequestManager().addRequest(infoRequest).start();
       })
-
   }
 }
 

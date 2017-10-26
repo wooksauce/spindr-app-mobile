@@ -14,7 +14,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getToken();
+    this.props.actions.fbLogin();
   }
 
   resetNavigation = (targetRoute) => {
