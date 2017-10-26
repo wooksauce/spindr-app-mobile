@@ -10,35 +10,36 @@ class Main extends Component {
     }
   }
 
-  fetchUserInfo() {
-    axios.get('/')
-    .then(items => {
-      this.setState({ allItems: items.data });
+  fetchUserInfo = () => {
+    axios.get(`http://10.0.2.2:3000/api/userId/${this.props.passUserId}`)
+    .then(info => {
+      this.setState({ userInfo : info });
+      console.log('UserInfo: ', this.state.userInfo.data);
     })
     .catch(err => {
       console.log('Fetch err:', err);
     })
   }
 
-  handlePost() {
-    axios.post('/api', {
-      rentee_id: this.state.rentee_id,
-      itemname: this.state.itemname,
-      image: this.state.image,
-      brand: this.state.brand,
-      price: this.state.price,
-      size: this.state.size,
-      sex: this.state.sex,
-      tag: this.parseThruTags(),
-      status: this.state.status
-    })
-    .then(() => {
-      console.log('Upload success');
-    })
-    .catch(err => {
-      console.log('Upload err:', err);
-    })
-  }
+  // handlePost() {
+  //   axios.post('/api', {
+  //     rentee_id: this.state.rentee_id,
+  //     itemname: this.state.itemname,
+  //     image: this.state.image,
+  //     brand: this.state.brand,
+  //     price: this.state.price,
+  //     size: this.state.size,
+  //     sex: this.state.sex,
+  //     tag: this.parseThruTags(),
+  //     status: this.state.status
+  //   })
+  //   .then(() => {
+  //     console.log('Upload success');
+  //   })
+  //   .catch(err => {
+  //     console.log('Upload err:', err);
+  //   })
+  // }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -47,7 +48,7 @@ class Main extends Component {
         <Text>Main</Text>
         <Button
         title = 'Ready'
-        onPress = {() => console.log('Ready')} />
+        onPress = {() => this.fetchUserInfo() } />
         <Button 
         title = 'Matches'
         onPress = {() => navigate('Matches')} />
