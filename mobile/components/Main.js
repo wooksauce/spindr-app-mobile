@@ -5,27 +5,40 @@ import axios from 'axios';
 class Main extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userInfo: {}
+    }
   }
 
-  // handlePost() {
-  //   axios.post('/api', {
-  //     rentee_id: this.state.rentee_id,
-  //     itemname: this.state.itemname,
-  //     image: this.state.image,
-  //     brand: this.state.brand,
-  //     price: this.state.price,
-  //     size: this.state.size,
-  //     sex: this.state.sex,
-  //     tag: this.parseThruTags(),
-  //     status: this.state.status
-  //   })
-  //   .then(() => {
-  //     console.log('Upload success');
-  //   })
-  //   .catch(err => {
-  //     console.log('Upload err:', err);
-  //   })
-  // }
+  fetchUserInfo() {
+    axios.get('/')
+    .then(items => {
+      this.setState({ allItems: items.data });
+    })
+    .catch(err => {
+      console.log('Fetch err:', err);
+    })
+  }
+
+  handlePost() {
+    axios.post('/api', {
+      rentee_id: this.state.rentee_id,
+      itemname: this.state.itemname,
+      image: this.state.image,
+      brand: this.state.brand,
+      price: this.state.price,
+      size: this.state.size,
+      sex: this.state.sex,
+      tag: this.parseThruTags(),
+      status: this.state.status
+    })
+    .then(() => {
+      console.log('Upload success');
+    })
+    .catch(err => {
+      console.log('Upload err:', err);
+    })
+  }
 
   render() {
     const { navigate } = this.props.navigation;
