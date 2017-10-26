@@ -10,14 +10,27 @@ class Main extends Component {
     }
   }
 
-  fetchUserInfo = () => {
+  readyToPlay = () => {
     axios.get(`http://10.0.2.2:3000/api/userId/${this.props.passUserId}`)
     .then(info => {
-      this.setState({ userInfo : info });
-      console.log('UserInfo: ', this.state.userInfo.data);
+      this.setState({ userInfo : info.data });
+      console.log('UserInfo: ', this.state.userInfo);
+    })
+    .then(() => {
+      this.postToFlask();
     })
     .catch(err => {
       console.log('Fetch err:', err);
+    })
+  }
+
+  postToFlask = () => {
+    axios.post('http://127.0.0.1:5000/api', this.state.userInfo)
+    .then(() => {
+      console.log('Posted to flask:', this.state.userInfo);
+    })
+    .catch(err => {
+      console.log(err);
     })
   }
 
@@ -48,7 +61,7 @@ class Main extends Component {
         <Text>Main</Text>
         <Button
         title = 'Ready'
-        onPress = {() => this.fetchUserInfo() } />
+        onPress = {() => this.readyToPlay() } />
         <Button 
         title = 'Matches'
         onPress = {() => navigate('Matches')} />
