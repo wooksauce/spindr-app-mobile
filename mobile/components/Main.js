@@ -13,7 +13,7 @@ class Main extends Component {
   }
 
   readyToPlay = () => {
-    axios.get(`http://10.0.2.2:3000/api/userId/${this.props.passUserId}`)
+    axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
     .then(info => {
       this.setState({ userInfo : info.data });
       console.log('UserInfo:', this.state.userInfo);
@@ -27,7 +27,7 @@ class Main extends Component {
   }
 
   postToFlask = () => {
-    axios.post('http://127.0.0.1:5000/api', this.state.userInfo)
+    axios.post('http://localhost:5000/', this.state.userInfo)
     .then(() => {
       console.log('Posted to flask:', this.state.userInfo);
     })
@@ -49,7 +49,8 @@ class Main extends Component {
         onPress = {() => {this.readyToPlay(), navigate('Video')}} />
         <Button 
         title = 'Matches'
-        onPress = {() => navigate('Matches')} />
+        onPress = {() => navigate('Matches')}
+        />
         <Button 
         title = 'Profile'
         onPress = {() => navigate('Profile')} />
@@ -64,8 +65,8 @@ class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',    
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#ffffff',
   },
   readyBtn: {
