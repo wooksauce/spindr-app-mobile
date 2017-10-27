@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import axios from 'axios';
+import Video from './Video'
 
 class Main extends Component {
   constructor(props) {
@@ -46,8 +47,13 @@ class Main extends Component {
         title = 'Matches'
         onPress = {() => navigate('Matches')} />
         <Button 
+<<<<<<< refs/remotes/upstream/master
         title = 'Profile'
         onPress = {() => navigate('Profile')} />
+=======
+        title = 'Video'
+        onPress = {() => navigate('Video')} />
+>>>>>>> refactor video component and able to switch room
       </View>
     );
   }
