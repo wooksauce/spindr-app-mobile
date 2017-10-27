@@ -6,9 +6,9 @@ class Edit extends Component {
   render() {
     
     return (
-      <View >
-        {interests.map(interest =>
-        <Text>{ interest }</Text>)}
+      <View style={styles.container}>
+        {interests.map((interest, i) =>
+        <Text key={i} style={styles.text}>{ interest }</Text>)}
         <Button
         title = 'Save'
         onPress = {() => console.log('Saved')} />
@@ -16,5 +16,19 @@ class Edit extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',    
+    justifyContent: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  text: {
+    fontSize: 20,
+    margin: 10,
+  },
+});
 
 export default Edit;

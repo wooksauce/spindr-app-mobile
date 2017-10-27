@@ -14,7 +14,7 @@ class Main extends Component {
     axios.get(`http://10.0.2.2:3000/api/userId/${this.props.passUserId}`)
     .then(info => {
       this.setState({ userInfo : info.data });
-      console.log('UserInfo: ', this.state.userInfo);
+      console.log('UserInfo:', this.state.userInfo);
     })
     .then(() => {
       this.postToFlask();
@@ -33,26 +33,6 @@ class Main extends Component {
       console.log(err);
     })
   }
-
-  // handlePost() {
-  //   axios.post('/api', {
-  //     rentee_id: this.state.rentee_id,
-  //     itemname: this.state.itemname,
-  //     image: this.state.image,
-  //     brand: this.state.brand,
-  //     price: this.state.price,
-  //     size: this.state.size,
-  //     sex: this.state.sex,
-  //     tag: this.parseThruTags(),
-  //     status: this.state.status
-  //   })
-  //   .then(() => {
-  //     console.log('Upload success');
-  //   })
-  //   .catch(err => {
-  //     console.log('Upload err:', err);
-  //   })
-  // }
 
   render() {
     const { navigate } = this.props.navigation;
