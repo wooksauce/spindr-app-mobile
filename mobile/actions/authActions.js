@@ -32,7 +32,7 @@ export const fbLogin = () => {
             alert('Error fetching data: ' + error.toString());
           } else {
             dispatch({type: 'USER_LOGIN_SUCCESSFUL', payload: result});
-            axios.post('http://localhost:3000/api/addUser', {
+            axios.post('http://10.0.2.2:3000/api/addUser', {
               name: result.name,
               email: result.email,
               sex: result.gender,

@@ -2,6 +2,8 @@ package com.spindr_app_mobile;
 
 import android.app.Application;
 
+import com.oney.WebRTCModule.WebRTCModulePackage;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -36,8 +38,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new VectorIconsPackage(),
-            new FBSDKPackage(mCallbackManager)
+          new VectorIconsPackage(),
+          new FBSDKPackage(mCallbackManager),
+          new WebRTCModulePackage()
       );
     }
 

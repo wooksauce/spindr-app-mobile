@@ -30,6 +30,7 @@ class App extends Component {
     if (this.props.username) {
       return (
         <Main
+        passUserId={this.props.userId}
         navigation={this.props.navigation} />
       );
     }
@@ -55,12 +56,11 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 const mainState = (store) => {
   return {
     username: store.Auth.username,
     userToken: store.Auth.userToken,
+    userId: store.Auth.userId,
     email: store.Auth.email,
     picture: store.Auth.picture,
     isReady: true
