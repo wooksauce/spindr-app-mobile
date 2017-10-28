@@ -5,6 +5,7 @@ import Matches from '../components/Matches';
 import Video from '../components/Video';
 import Edit from '../components/Edit';
 import Like from '../components/Like';
+import Chat from '../components/Chat';
 
 const stackRoutes = {
   Home: { screen: Main, 
@@ -49,7 +50,8 @@ const stackRoutes = {
   Like: { screen: Like,
     navigationOptions: {
     headerLeft: null
-  } }
+  } },
+  Chat: { screen: Chat }
 }
 
 const tabRoutes = {

@@ -8,7 +8,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: {}
+      userInfo: {},
     }
   }
 
@@ -54,9 +54,14 @@ class Main extends Component {
         <Button 
         title = 'Profile'
         onPress = {() => navigate('Profile')} />
+        <Button
+        title = 'Chats'
+        onPress = {() => navigate('Chat')} />
+        
         {/* <Button 
         title = 'Video'
         onPress = {() => navigate('Video')} /> */}
+        
       </View>
     );
   }
