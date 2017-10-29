@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
-import Video from './Video'
+import Video from './Video';
 
 class Main extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Main extends Component {
   }
 
   readyToPlay = () => {
-    axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
+    axios.get(`http://localhost:3000/api/userId/${this.props.passUserId}`)
     .then(info => {
       this.setState({ userInfo : info.data });
       console.log('UserInfo:', this.state.userInfo);

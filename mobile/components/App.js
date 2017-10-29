@@ -8,6 +8,7 @@ import {
   View,
   Button,
 } from 'react-native';
+
 import Loading from './Loading';
 import Login from './Login';
 import Main from './Main';

@@ -33,7 +33,7 @@ export const fbLogin = () => {
           } else {
             console.log('FACEBOOK USER DATA: ', result)
             dispatch({type: 'USER_LOGIN_SUCCESSFUL', payload: result});
-            axios.post('http://13.57.52.97:3000/api/addUser', {
+            axios.post('http://localhost:3000/api/addUser', {
               name: result.name,
               email: result.email,
               sex: result.gender,
