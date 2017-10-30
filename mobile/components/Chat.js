@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
+import axios from 'axios';
 
 const USER_ID = '@userId';
 
@@ -21,12 +22,20 @@ class Chat extends Component {
     this.determineUser = this.determineUser.bind(this);
   }
 
+  componentDidMount() {
+    console.log('IDDDDD:', this.props.navigation.state.params.userId);
+  }
+
   onSend(messages = []) {
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }));
+    axios.post('http://localhost:3000/api/chats', {
+      user_one: this.props.navigation.state.params.userId,
+      chat_entry: messages[0].text
+    })
     this.socket.emit('message', messages[0]);
-    // console.log('SENTTTTTTTTTTTTT');
+    console.log('Message sent:', messages[0]);
   }
 
   determineUser() {
