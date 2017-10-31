@@ -37,21 +37,22 @@ class Main extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    console.log('this is props in Main: ', this.props)
     return (
       <View style={styles.container}>
         <Text>Main</Text>
         <Button
         title = 'Ready'
-        onPress = {() => this.readyToPlay() } />
+        onPress = {() => {this.readyToPlay(), navigate('Video')}} />
         <Button 
         title = 'Matches'
         onPress = {() => navigate('Matches')} />
         <Button 
         title = 'Profile'
         onPress = {() => navigate('Profile')} />
-        <Button
+        {/* <Button 
         title = 'Video'
-        onPress = {() => navigate('Video')} />
+        onPress = {() => navigate('Video')} /> */}
       </View>
     );
   }

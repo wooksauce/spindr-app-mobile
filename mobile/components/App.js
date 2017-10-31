@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
 } from 'react-native';
 import Loading from './Loading';
 import Login from './Login';
@@ -18,10 +18,22 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      isReady: false,
+    } 
+  }
+  componentDidMount() {
+    setTimeout(() => this.successfulLogin(), 3000);
+  }
+  
+  successfulLogin = () => {
+      this.setState({isReady: true})
   }
 
   render() {
-    if (!this.props.isReady) {
+    console.log('this is App.js props: ', this.props)
+    const { navigate } = this.props.navigation;
+    if (!this.state.isReady) {
       return (
         <Loading />
       );
@@ -37,7 +49,6 @@ class App extends Component {
 
     return (
         <Login 
-        successfulLogin={this.successfulLogin}
         navigation={this.props.navigation} />
     );
   }
@@ -63,7 +74,6 @@ const mainState = (store) => {
     userId: store.Auth.userId,
     email: store.Auth.email,
     picture: store.Auth.picture,
-    isReady: true
   }
 }
 

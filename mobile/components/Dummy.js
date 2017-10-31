@@ -9,7 +9,7 @@ class Dummy extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Mark sucks my toto</Text>
+        <Text>Test</Text>
         <Button 
         title='teehee'
         onPress = {() => this.props.actions.doSomething()} />

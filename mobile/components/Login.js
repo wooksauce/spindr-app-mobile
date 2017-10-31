@@ -29,50 +29,52 @@ class Login extends Component {
 
 
   render() {
-    const { navigate } = this.props.navigation;
+    // const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require('../images/Logo.png')}
-      />
-      <Text>FACEBOOK SIGNIN</Text>
-      <LoginButton 
-        readPermissions={["email", "public_profile", "public_actions"]}
-        onLoginFinished={
-          (error, result) => {
-            if (error) {
-              console.log("Login failed with error: " + error.message);
-            } else if (result.isCancelled) {
-              console.log("Login was cancelled"); 
-            } else {
-              this.props.actions.fbLogin();
-              navigate('Main');
-              this.resetNavigation('Main');
-              console.log("Login was successful with permissions: " + result.grantedPermissions)
+        <Image
+          style={styles.logo}
+          source={require('../images/Login_Logo.png')}
+        />
+        <View>
+          <Text>Get Started</Text>
+          <Text>Please log in with your Facebook account.</Text>
+        </View>
+        <LoginButton 
+          style={styles.loginBtn}
+          readPermissions={["email", "public_profile"]}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                console.log("Login failed with error: " + error.message);
+              } else if (result.isCancelled) {
+                console.log("Login was cancelled"); 
+              } else {
+                this.props.actions.fbLogin();
+                // navigate('Main');
+                // this.resetNavigation('Main');
+                console.log("Login was successful with permissions: " + result.grantedPermissions)
+              }
             }
           }
-        }
-        onLogoutFinished={
-          (error, result) => {
-            if (error) {
-              console.log("Logout failed with error: " + error.message);
-            } else {
-              this.props.actions.logout();
+          onLogoutFinished={
+            (error, result) => {
+              if (error) {
+                console.log("Logout failed with error: " + error.message);
+              } else {
+                this.props.actions.logout();
+              }
             }
-          }
-        }/>
-        <Button 
-          title='Mark LOL'
-          onPress = {() => navigate('Dummy')} />
-    </View>
+          }/>
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#ffffff',
   },
@@ -81,8 +83,13 @@ const styles = StyleSheet.create({
   },
   logo: {
     alignItems: 'center',
-    width: 250, 
-    height: 250
+    marginTop: 30,
+    width: 100, 
+    height: 100
+  },
+  loginBtn: {
+    width: 300,
+    height: 50,
   }
 });
 

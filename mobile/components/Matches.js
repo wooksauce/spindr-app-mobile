@@ -6,7 +6,6 @@ class Matches extends Component {
     return (
       <View>
         <Text>Matches are gonna be shown here</Text>
-        <Text>Say hi to Tara for me Mark</Text>
       </View>
     );
   }

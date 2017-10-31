@@ -14,7 +14,6 @@ class Profile extends Component {
         onPress={() => console.log("Works!")}
         activeOpacity={0.7} />
         <Text>Profile is gonna be shown here</Text>
-        <Text>Say hi to Tara for me Mark</Text>
         <Button 
         title = 'Edit'
         onPress = {() => navigate('Edit')} />

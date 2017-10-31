@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 
 class Loading extends Component {
   render() {
+    console.log('you are in the loading component')
     return (
       <View style={styles.container}>
-        <Text>Loading</Text>
+        <Image
+        style={styles.logo}
+        source={require('../images/Logo.png')}
+      />
       </View>
     );
   }
@@ -16,8 +20,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FF5A5F',
   },
+  logo: {
+    alignItems: 'center',
+    width: 120, 
+    height: 170
+  }
 });
 
 export default Loading;

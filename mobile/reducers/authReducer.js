@@ -5,7 +5,6 @@ const initialState = {
   picture: null,
   gender: null,
   userToken: null,
-  isReady: null
 }
 
 const authReducer = (state=initialState, action) => {
@@ -16,7 +15,7 @@ const authReducer = (state=initialState, action) => {
         username: action.payload.name, 
         email: action.payload.email,
         picture: action.payload.picture.data.url,
-        gender: action.payload.gender
+        gender: action.payload.gender,
       })
     }
 
@@ -40,7 +39,6 @@ const authReducer = (state=initialState, action) => {
     case 'USER_TOKEN_SUCCESSFUL': {
       return Object.assign({}, state, {
         userToken: true,
-        isReady: true
       })
     }
 
