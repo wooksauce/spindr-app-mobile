@@ -37,7 +37,6 @@ class Main extends Component {
   }
 
   render() {
-    const userId = this.props.passUserId;
     const { navigate } = this.props.navigation;
     console.log('this is props in Main: ', this.props)
     return (
