@@ -27,15 +27,27 @@ class Chat extends Component {
   fetchLogs() {
     axios.get('http://localhost:3000/api/chats')
       .then(logs => {
-        console.log('FETCHED LOGS:', logs.data);
+        console.log('FETCHED LOGS:', logs);
         const getRes = logs.data;
-        for (let i = 0; i < getRes.length; i++) {
-          console.log('PUSHING:', getRes[i]['chat_entry']);
-          this.state.previous.push(getRes[i]['chat_entry']);
-        }
-        console.log('AFTER FOR LOOP:', { text: this.state.previous });
+
+
+
+        const giftedChatFormatted = getRes.map(log => {
+          return { _id: log.id,
+            text: log.chat_entry,
+            createdAt: new Date()
+          }
+        })
+
+        console.log('AFTER FORMATTING:', giftedChatFormatted);
+
+        // for (let i = 0; i < getRes.length; i++) {
+        //   console.log('PUSHING:', getRes[i]['chat_entry']);
+        //   this.state.previous.push(getRes[i]['chat_entry']);
+        // }
+        // console.log('AFTER FOR LOOP:', { text: this.state.previous });
         this.setState((previousState) => ({
-          messages: GiftedChat.append(previousState.messages, { text: this.state.previous }),
+          messages: GiftedChat.append(previousState.messages, giftedChatFormatted),
         }));
       })
       .catch(err => {
