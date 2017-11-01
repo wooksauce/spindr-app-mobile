@@ -10,6 +10,7 @@ import {
   Platform,
   ScrollView,
   Dimensions,
+  StatusBar
 } from 'react-native';
 
 import { 
@@ -18,8 +19,6 @@ import {
  } from 'react-native-elements';
 
 import io from 'socket.io-client';
-
-// const socket = io.connect('https://react-native-webrtc.herokuapp.com', {transports: ['websocket']});
 
 const window = Dimensions.get('window');
 
@@ -53,8 +52,7 @@ export default class Video extends Component {
       from: null,
       countDown: true,
     }
-    // const configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
-    this.socket = io.connect('http://13.57.52.97:3000');
+    this.socket = io.connect('https://react-native-webrtc.herokuapp.com', {transports: ['websocket']});
     this.localStream = null;
     this._timeOut = this._timeOut.bind(this)
 
@@ -377,6 +375,8 @@ export default class Video extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
+        <StatusBar
+        barStyle='light-content'/>
        { this.state.status == 'ready' ? (
         <RTCView streamURL={this.state.selfViewSrc} style={styles.selfView}>
            <Text style={styles.welcome}>
