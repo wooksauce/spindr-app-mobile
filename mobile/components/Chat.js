@@ -29,9 +29,6 @@ class Chat extends Component {
       .then(logs => {
         console.log('FETCHED LOGS:', logs);
         const getRes = logs.data;
-
-
-
         const giftedChatFormatted = getRes.map(log => {
           return { _id: log.id,
             text: log.chat_entry,
@@ -40,6 +37,7 @@ class Chat extends Component {
         })
 
         console.log('AFTER FORMATTING:', giftedChatFormatted);
+        giftedChatFormatted.reverse();
 
         // for (let i = 0; i < getRes.length; i++) {
         //   console.log('PUSHING:', getRes[i]['chat_entry']);
