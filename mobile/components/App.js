@@ -6,22 +6,34 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
 } from 'react-native';
 import Loading from './Loading';
 import Login from './Login';
 import Main from './Main';
 import Dummy from './Dummy';
 import * as authActions from '../actions/authActions';
+import { AppNav } from '../navigators/appNavigator'
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      isReady: false,
+    } 
+  }
+  componentDidMount() {
+    setTimeout(() => this.successfulLogin(), 1000);
+  }
+  
+  successfulLogin = () => {
+      this.setState({isReady: true})
   }
 
   render() {
-    if (!this.props.isReady) {
+    console.log('this is App.js props: ', this.props)
+    if (!this.state.isReady) {
       return (
         <Loading />
       );
@@ -29,16 +41,13 @@ class App extends Component {
 
     if (this.props.username) {
       return (
-        <Main
-        passUserId={this.props.userId}
-        navigation={this.props.navigation} />
+        <AppNav
+        passUserId={this.props.userId} />
       );
     }
 
     return (
-        <Login 
-        successfulLogin={this.successfulLogin}
-        navigation={this.props.navigation} />
+        <Login />
     );
   }
 }
@@ -63,7 +72,6 @@ const mainState = (store) => {
     userId: store.Auth.userId,
     email: store.Auth.email,
     picture: store.Auth.picture,
-    isReady: true
   }
 }
 

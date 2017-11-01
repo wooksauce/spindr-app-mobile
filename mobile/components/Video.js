@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CountdownCircle from 'react-native-countdown-circle'
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -32,14 +33,15 @@ import {
   getUserMedia,
 } from 'react-native-webrtc';
 
-export default class Video extends Component {
+class Video extends Component {
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
     this.state = {
       info: 'Initializing',
       status: 'init',
-      roomID: '',
+      username: this.props.username,
+      roomID: 'Test',
       isFront: true,
       selfViewSrc: null,
       remoteList: {},
@@ -51,6 +53,7 @@ export default class Video extends Component {
       to: null,
       from: null,
       countDown: true,
+      lobby: {},
     }
     this.socket = io.connect('https://react-native-webrtc.herokuapp.com', {transports: ['websocket']});
     this.localStream = null;
@@ -60,9 +63,15 @@ export default class Video extends Component {
 
   componentDidMount() {
     container = this;
-    // this.socket = io('http://13.57.52.97:3000');
+    
+    console.log('this is this before in cdm: ', this.state)
+    this.setState({remoteList: {}, pcPeers: {}, from: null, to: null, info: 'Initializing', roomID: '', textRoomConnected: false, status: 'init'})
+    console.log('this is this after in cdm: ', this.state)
+
+
+
     // this.socket.on('connect', function(data) {
-      // console.log('this is connect data: ', data)
+    //   console.log('this is connect data: ', data)
       container.getLocalStream(true, function(stream) {
         console.log('this is stream: ', stream)
         container.localStream = stream;
@@ -134,6 +143,8 @@ export default class Video extends Component {
   createPC = (socketId, isOffer) => {
     const pc = new RTCPeerConnection(this.state.configuration);
     this.state.pcPeers[socketId] = pc;
+
+    console.log('this is pcPeer: ', this.state.pcPeers)
   
     pc.onicecandidate = function (event) {
       console.log('onicecandidate', event.candidate);
@@ -294,7 +305,7 @@ export default class Video extends Component {
   
 
   _press = (event) => {
-    this.refs.roomID.blur();
+    // this.refs.roomID.blur();
     this.setState({status: 'connect', info: 'Connecting'});
     this.join(this.state.roomID);
   }
@@ -370,16 +381,44 @@ export default class Video extends Component {
       //   container.setState({roomID: 'Test2', countDown: false});
       //   container.join(container.state.roomID);
       // });
+      // this.leave(this.state.from)
+      // this.setState({from: null, to: null, status: 'ready', info: 'Please enter or create room ID', roomId: '', textRoomConnected: false})
+
+
+      // container.getLocalStream(true, function(stream) {
+      //   container.localStream = stream;
+      //   container.setState({selfViewSrc: null,remoteList: {}})
+      //   container.setState({selfViewSrc: stream.toURL()});
+      //   container.setState({status: 'ready'});
+      //   container.setState({status: 'connect', info: 'Connecting'});
+      //   container.setState({roomID: 'Test2', countDown: false});
+      //   container.join(container.state.roomID);
+      // });
+
+      container.getLocalStream(true, function(stream) {
+        container.localStream = stream;
+        container.setState({selfViewSrc: null,remoteList: {}})
+        container.setState({selfViewSrc: stream.toURL()});
+        container.setState({status: 'ready'});
+        container.setState({status: 'connect', info: 'Connecting'});
+        container.setState({roomID: 'Test2', countDown: false});
+        container.join(container.state.roomID);
+      });
+      console.log('this is state checking after timeout: ', this.state)
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <StatusBar
         barStyle='light-content'/>
        { this.state.status == 'ready' ? (
         <RTCView streamURL={this.state.selfViewSrc} style={styles.selfView}>
-           <Text style={styles.welcome}>
+          <Text style={styles.welcome}>
+            {this.state.username}
+          </Text >
+          <Text style={styles.welcome}>
             {this.state.info}
           </Text >
           <View style={styles.roomInputSection}>
@@ -410,7 +449,7 @@ export default class Video extends Component {
            color="#ff003f"
            bgColor="#fff"
            textStyle={{ fontSize: 20 }}
-           onTimeElapsed={() => this._timeOut()}
+           onTimeElapsed={() => navigate('Like')}
        /> : null}
          </Text>
         {this.state.info === 'One peer leave!' ? 
@@ -481,3 +520,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
+
+const VideoState = (store) => {
+  return {
+    username: store.Auth.username,
+  }
+};
+
+export default connect(VideoState)(Video);
