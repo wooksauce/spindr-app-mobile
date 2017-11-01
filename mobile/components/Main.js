@@ -47,13 +47,11 @@ class Main extends Component {
         title = 'Matches'
         onPress = {() => navigate('Matches')} />
         <Button 
-<<<<<<< refs/remotes/upstream/master
         title = 'Profile'
         onPress = {() => navigate('Profile')} />
-=======
+        <Button
         title = 'Video'
         onPress = {() => navigate('Video')} />
->>>>>>> refactor video component and able to switch room
       </View>
     );
   }
