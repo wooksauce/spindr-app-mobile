@@ -69,7 +69,6 @@ class Video extends Component {
     console.log('this is this after in cdm: ', this.state)
 
 
-
     // this.socket.on('connect', function(data) {
     //   console.log('this is connect data: ', data)
       container.getLocalStream(true, function(stream) {
