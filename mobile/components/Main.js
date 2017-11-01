@@ -22,7 +22,6 @@ class Main extends Component {
   }
 
   readyToPlay = () => {
-    console.log('this is user id: ', this.props)
     axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
     .then(info => {
       this.setState({ userInfo : this.state.fake });

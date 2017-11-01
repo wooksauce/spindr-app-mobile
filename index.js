@@ -26,5 +26,5 @@ class SpindrAppMobile extends React.Component {
     );
   }
 }
-
+console.disableYellowBox = true;
 AppRegistry.registerComponent('spindr_app_mobile', () => SpindrAppMobile);
