@@ -19,7 +19,7 @@ const Routes = {
   Main: { screen: Main },
   Profile: { screen: Profile },
   Matches: { screen: Matches },
-  // Video: { screen: Video },
+  Video: { screen: Video },
   Edit: { screen: Edit }
 }
 export default Routes;

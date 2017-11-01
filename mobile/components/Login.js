@@ -38,7 +38,7 @@ class Login extends Component {
       />
       <Text>FACEBOOK SIGNIN</Text>
       <LoginButton 
-        readPermissions={["email", "public_profile"]}
+        readPermissions={["email", "public_profile", "public_actions"]}
         onLoginFinished={
           (error, result) => {
             if (error) {

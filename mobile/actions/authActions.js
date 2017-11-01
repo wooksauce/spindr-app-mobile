@@ -31,8 +31,9 @@ export const fbLogin = () => {
           if (error) {
             alert('Error fetching data: ' + error.toString());
           } else {
+            console.log('FACEBOOK USER DATA: ', result)
             dispatch({type: 'USER_LOGIN_SUCCESSFUL', payload: result});
-            axios.post('http://10.0.2.2:3000/api/addUser', {
+            axios.post('http://13.57.52.97:3000/api/addUser', {
               name: result.name,
               email: result.email,
               sex: result.gender,
@@ -54,7 +55,7 @@ export const fbLogin = () => {
             version: 'v2.5',
             parameters: {
               'fields': {
-                'string': 'name,picture,email,gender,education'
+                'string': 'name,picture,email,gender,education,locale,cover'
               }
             }
           },
