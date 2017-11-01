@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { Button } from 'react-native-elements';
 import axios from 'axios';
 import Video from './Video'
 
@@ -40,9 +41,11 @@ class Main extends Component {
     console.log('this is props in Main: ', this.props)
     return (
       <View style={styles.container}>
-        <Text>Main</Text>
+        <StatusBar
+        barStyle='light-content'/>
         <Button
         title = 'Ready'
+        buttonStyle={styles.readyBtn}
         onPress = {() => {this.readyToPlay(), navigate('Video')}} />
         <Button 
         title = 'Matches'
@@ -65,6 +68,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ffffff',
   },
+  readyBtn: {
+    borderRadius: 100,
+  }
 });
 
 export default Main;

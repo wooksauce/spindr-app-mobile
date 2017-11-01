@@ -33,7 +33,7 @@ import {
   getUserMedia,
 } from 'react-native-webrtc';
 
-export default class Video extends Component {
+class Video extends Component {
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
@@ -63,6 +63,7 @@ export default class Video extends Component {
 
   componentDidMount() {
     container = this;
+    
     console.log('this is this before in cdm: ', this.state)
     this.setState({remoteList: {}, pcPeers: {}, from: null, to: null, info: 'Initializing', roomID: '', textRoomConnected: false, status: 'init'})
     console.log('this is this after in cdm: ', this.state)

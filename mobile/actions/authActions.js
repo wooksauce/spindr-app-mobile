@@ -55,7 +55,7 @@ export const fbLogin = () => {
             version: 'v2.5',
             parameters: {
               'fields': {
-                'string': 'name,picture,email,gender,education,locale,cover'
+                'string': 'name,picture.type(large),email,gender,education'
               }
             }
           },

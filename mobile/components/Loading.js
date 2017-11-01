@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, StatusBar } from 'react-native';
 
 class Loading extends Component {
   render() {
     console.log('you are in the loading component')
     return (
       <View style={styles.container}>
+        <StatusBar
+        barStyle='light-content'/>
         <Image
         style={styles.logo}
         source={require('../images/Logo.png')}

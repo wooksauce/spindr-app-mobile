@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addNavigationHelpers, StackNavigator, NavigationActions } from 'react-navigation';
-import routes from '../config/routes';
+import { addNavigationHelpers, StackNavigator } from 'react-navigation';
+import {stackRoutes} from '../config/routes';
 
-export const AppNavigator = StackNavigator(routes);
+export const StackNav = StackNavigator(stackRoutes);
 
-class App extends React.Component {
+class Stack extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <AppNavigator navigation={addNavigationHelpers({
+      <StackNav navigation={addNavigationHelpers({
         dispatch: this.props.dispatch,
         state: this.props.nav,
       })} />
     );
   }
 }
-const mapStateToProps = (state) => ({
+const mapStackStateToProps = (state) => ({
   nav: state.nav
 });
-export const AppNav = connect(mapStateToProps)(App);
+
+export const AppNav = connect(mapStackStateToProps)(Stack);

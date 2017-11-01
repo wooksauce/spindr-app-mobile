@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, StatusBar} from 'react-native';
 import { 
   Button,
   SearchBar,
@@ -10,6 +10,8 @@ class Like extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
+        <StatusBar
+        barStyle='light-content'/>
         <Button title='Like' onPress = {() => navigate('Video')}>
           <Text>Like</Text>
         </Button>

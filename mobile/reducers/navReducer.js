@@ -1,11 +1,11 @@
 import { NavigationActions } from 'react-navigation';
 
-import { AppNavigator } from '../navigators/appNavigator';
+import { StackNav } from '../navigators/appNavigator';
 
-const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('App'));
+const initialStackState = StackNav.router.getStateForAction(StackNav.router.getActionForPathAndParams('Home'));
 
-const navReducer = (state = initialState, action) => {
-  const nextState = AppNavigator.router.getStateForAction(action, state);
+const navReducer = (state = initialStackState, action) => {
+  const nextState = StackNav.router.getStateForAction(action, state);
   return nextState || state;
 };
 

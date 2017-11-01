@@ -13,6 +13,7 @@ import Login from './Login';
 import Main from './Main';
 import Dummy from './Dummy';
 import * as authActions from '../actions/authActions';
+import { AppNav } from '../navigators/appNavigator'
 
 class App extends Component {
 
@@ -23,7 +24,7 @@ class App extends Component {
     } 
   }
   componentDidMount() {
-    setTimeout(() => this.successfulLogin(), 3000);
+    setTimeout(() => this.successfulLogin(), 1000);
   }
   
   successfulLogin = () => {
@@ -32,7 +33,6 @@ class App extends Component {
 
   render() {
     console.log('this is App.js props: ', this.props)
-    const { navigate } = this.props.navigation;
     if (!this.state.isReady) {
       return (
         <Loading />
@@ -41,15 +41,13 @@ class App extends Component {
 
     if (this.props.username) {
       return (
-        <Main
-        passUserId={this.props.userId}
-        navigation={this.props.navigation} />
+        <AppNav
+        passUserId={this.props.userId} />
       );
     }
 
     return (
-        <Login 
-        navigation={this.props.navigation} />
+        <Login />
     );
   }
 }

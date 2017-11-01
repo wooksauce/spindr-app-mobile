@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, StatusBar } from 'react-native';
 import FBSDK, { LoginButton, AccessToken } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 
@@ -17,28 +17,29 @@ class Login extends Component {
     this.props.actions.fbLogin();
   }
 
-  resetNavigation = (targetRoute) => {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: targetRoute }),
-      ],
-    });
-    this.props.navigation.dispatch(resetAction);
-  }
+  // resetNavigation = (targetRoute) => {
+  //   const resetAction = NavigationActions.reset({
+  //     index: 0,
+  //     actions: [
+  //       NavigationActions.navigate({ routeName: targetRoute }),
+  //     ],
+  //   });
+  //   this.props.navigation.dispatch(resetAction);
+  // }
 
 
   render() {
-    // const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Image
-          style={styles.logo}
-          source={require('../images/Login_Logo.png')}
-        />
-        <View>
-          <Text>Get Started</Text>
-          <Text>Please log in with your Facebook account.</Text>
+        <StatusBar
+        barStyle='light-content'/>
+        <View style={styles.textSection}>
+          <Image
+            style={styles.logo}
+            source={require('../images/Login_Logo.png')}
+          />
+          <Text style={styles.textTitle}>Get Started</Text>
+          <Text style={styles.textInfo}>Please log in with your Facebook account.</Text>
         </View>
         <LoginButton 
           style={styles.loginBtn}
@@ -51,8 +52,6 @@ class Login extends Component {
                 console.log("Login was cancelled"); 
               } else {
                 this.props.actions.fbLogin();
-                // navigate('Main');
-                // this.resetNavigation('Main');
                 console.log("Login was successful with permissions: " + result.grantedPermissions)
               }
             }
@@ -78,14 +77,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ffffff',
   },
+  textSection: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   loginTitle: {
     alignItems: 'center',
+  },
+  textTitle: {
+    textAlign: 'center',
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginTop: 50,
+    color: '#4A4A4A',
+    opacity: 0.9,
+  },
+  textInfo: {
+    textAlign: 'center',
+    fontSize: 20,
+    marginTop: 10,
+    color: '#888888',
+    width: 250,
+    opacity: 0.8,
   },
   logo: {
     alignItems: 'center',
     marginTop: 30,
-    width: 100, 
-    height: 100
+    width: 110, 
+    height: 110
   },
   loginBtn: {
     width: 300,

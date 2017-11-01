@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
 import interests from '../config/interests';
 
 class Edit extends Component {
@@ -7,6 +7,8 @@ class Edit extends Component {
     
     return (
       <View style={styles.container}>
+        <StatusBar
+        barStyle='light-content'/>
         {interests.map((interest, i) =>
         <Text key={i} style={styles.text}>{ interest }</Text>)}
         <Button
