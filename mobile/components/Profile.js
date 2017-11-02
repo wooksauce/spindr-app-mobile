@@ -20,9 +20,9 @@ class Profile extends Component {
             rounded />
           </View>
         <View style={styles.profileInfo}>
-          <Text>{this.props.username}</Text>
-          <Text>{this.props.gender}</Text>
-          <Text>{this.props.email}</Text>
+          <Text style={styles.infoUsername}>{this.props.username}</Text>
+          <Text style={styles.infoGender}>{this.props.gender}</Text>
+          <Text style={styles.infoEmail}>{this.props.email}</Text>
         </View>
         <View style={styles.editBtn}>
           <Button 
@@ -52,6 +52,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginTop: 50,
+  },
+  infoUsername: {
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  infoGender: {
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  infoEmail: {
+    textAlign: 'center',
+    fontSize: 20,
   },
   editBtn: {
     flex:1,
