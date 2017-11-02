@@ -9,7 +9,6 @@ class Matches extends Component {
         <StatusBar
         barStyle='light-content'/>
         <Text>Matches are gonna be shown here</Text>
-        <Text>Say hi to Tara for me Mark</Text>
         <Button
         title = 'Chats'
         onPress = {() => navigate('Chat')} />
