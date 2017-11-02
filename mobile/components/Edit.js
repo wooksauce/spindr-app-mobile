@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, StatusBar } from 'react-native';
+import { 
+  Card, 
+  ListItem, 
+  Button
+ } from 'react-native-elements';
 import interests from '../config/interests';
 
 class Edit extends Component {
@@ -23,10 +28,11 @@ class Edit extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View Style={styles.container}>
+      <ScrollView>
         <StatusBar
         barStyle='light-content'/>
-        {interests.map((interest, i) =>
+        {/* {interests.map((interest, i) =>
           <Text
           key={i} 
           style={styles.text}
@@ -34,7 +40,32 @@ class Edit extends Component {
           >{ interest }</Text>)}
           <Button
           title = 'Save'
+          onPress = {() => this.saveInterests()} /> */}
+          
+          <Card title="Interest">
+          <ScrollView contentContainerStyle={styles.interestSection}>
+          {
+            interests.map((interest, i) => {
+              return (
+                <Card key={i} containerStyle={styles.interest}>
+                {/* <View> */}
+                  <Text 
+                  style={styles.text}
+                  onPress={() => this.addInterest(interest)}
+                  >
+                  { interest }
+                  </Text>
+                {/* </View> */}
+                </Card>
+              );
+            })
+          }
+           </ScrollView>
+           <Button
+          title = 'Save'
           onPress = {() => this.saveInterests()} />
+          </Card>
+      </ScrollView>
       </View>
     );
   }
@@ -42,15 +73,21 @@ class Edit extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',    
+    flex: 1, 
     justifyContent: 'center',
     backgroundColor: '#F5FCFF',
   },
-  text: {
-    fontSize: 20,
+  interestSection: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  interest: {
     margin: 10,
+    padding: 10,
+  },
+  text: {
+    fontSize: 16,
   },
 });
 
