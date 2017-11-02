@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Image, TouchableHighlight } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 import Video from './Video';
@@ -13,7 +13,7 @@ class Main extends Component {
   }
 
   readyToPlay = () => {
-    axios.get(`http://localhost:3000/api/userId/${this.props.passUserId}`)
+    axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
     .then(info => {
       this.setState({ userInfo : info.data });
       console.log('UserInfo:', this.state.userInfo);
@@ -27,7 +27,7 @@ class Main extends Component {
   }
 
   postToFlask = () => {
-    axios.post('http://localhost:5000/', this.state.userInfo)
+    axios.post('http://13.57.39.204/', this.state.userInfo)
     .then(() => {
       console.log('Posted to flask:', this.state.userInfo);
     })
@@ -43,10 +43,16 @@ class Main extends Component {
       <View style={styles.container}>
         <StatusBar
         barStyle='light-content'/>
-        <Button
+        <TouchableHighlight  onPress = {() => {this.readyToPlay(), navigate('Video')}}>
+          <Image
+          style={styles.join}
+          source={require('../images/Join.png')}
+          />
+        </TouchableHighlight>
+        {/* <Button
         title = 'Ready'
         buttonStyle={styles.readyBtn}
-        onPress = {() => {this.readyToPlay(), navigate('Video')}} />
+        onPress = {() => {this.readyToPlay(), navigate('Video')}} /> */}
         <Button 
         title = 'Matches'
         onPress = {() => navigate('Matches')}
@@ -54,14 +60,6 @@ class Main extends Component {
         <Button 
         title = 'Profile'
         onPress = {() => navigate('Profile')} />
-        <Button
-        title = 'Chats'
-        onPress = {() => navigate('Chat')} />
-        
-        {/* <Button 
-        title = 'Video'
-        onPress = {() => navigate('Video')} /> */}
-        
       </View>
     );
   }
@@ -76,7 +74,13 @@ const styles = StyleSheet.create({
   },
   readyBtn: {
     borderRadius: 100,
-  }
+  },
+  join: {
+    alignItems: 'center',
+    marginTop: 30,
+    width: 200, 
+    height: 200
+  },
 });
 
 export default Main;
