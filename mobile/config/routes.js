@@ -49,9 +49,22 @@ const stackRoutes = {
   } },
   Like: { screen: Like,
     navigationOptions: {
-    headerLeft: null
+      title: 'Like or Dislike',
+      headerTintColor: "white",
+      headerLeft: null,
+      headerStyle: {
+        backgroundColor: '#FF5A5F', 
+        elevation: null
+      },
   } },
-  Chat: { screen: Chat }
+  Chat: { screen: Chat,  navigationOptions: {
+    title: 'Chat',
+    headerTintColor: "white",
+    headerStyle: {
+      backgroundColor: '#FF5A5F', 
+      elevation: null
+    },
+  }},
 }
 
 const tabRoutes = {

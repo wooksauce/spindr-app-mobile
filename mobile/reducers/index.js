@@ -7,7 +7,7 @@ import Dummy from './dummyReducer';
 const appReducer = combineReducers({
   Auth,
   Dummy, 
-  nav: Nav
+  nav: Nav,
 });
 
 export default appReducer;
