@@ -33,237 +33,7 @@ import {
   getUserMedia,
 } from 'react-native-webrtc';
 
-// import LikeDislike from './LikeDislike'
 
-// const configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
-
-// const pcPeers = {};
-// let localStream;
-
-// function getLocalStream(isFront, callback) {
-//   let videoSourceId;
-//   // on android, you don't have to specify sourceId manually, just use facingMode
-//   // uncomment it if you want to specify
-//   if (Platform.OS === 'ios') {
-//     MediaStreamTrack.getSources(sourceInfos => {
-//       console.log("sourceInfos: ", sourceInfos);
-
-//       for (const i = 0; i < sourceInfos.length; i++) {
-//         const sourceInfo = sourceInfos[i];
-//         if(sourceInfo.kind == "video" && sourceInfo.facing == (isFront ? "front" : "back")) {
-//           videoSourceId = sourceInfo.id;
-//         }
-//       }
-//     });
-//   }
-//   getUserMedia({
-//     audio: true,
-//     video: {
-//       mandatory: {
-//         minWidth: 640, // Provide your own width, height and frame rate here
-//         minHeight: 360,
-//         minFrameRate: 30,
-//       },
-//       facingMode: (isFront ? "user" : "environment"),
-//       optional: (videoSourceId ? [{sourceId: videoSourceId}] : []),
-//     }
-//   }, function (stream) {
-//     console.log('getUserMedia success', stream);
-//     callback(stream);
-//   }, error => {
-//     console.log("getUserMedia error", error);
-//   });
-// }
-
-// function join(roomID) {
-//   socket.emit('join', roomID, function(socketIds){
-//     console.log('join', socketIds);
-//     for (const i in socketIds) {
-//       const socketId = socketIds[i];
-//       createPC(socketId, true);
-//     }
-//   });
-// }
-
-// function createPC(socketId, isOffer) {
-//   const pc = new RTCPeerConnection(configuration);
-//   pcPeers[socketId] = pc;
-
-//   pc.onicecandidate = function (event) {
-//     console.log('onicecandidate', event.candidate);
-//     if (event.candidate) {
-//       socket.emit('exchange', {'to': socketId, 'candidate': event.candidate });
-//     }
-//   };
-
-//   function createOffer() {
-//     pc.createOffer(function(desc) {
-//       console.log('createOffer', desc);
-//       pc.setLocalDescription(desc, function () {
-//         console.log('setLocalDescription', pc.localDescription);
-//         socket.emit('exchange', {'to': socketId, 'sdp': pc.localDescription });
-//       }, error => {
-//         console.log("setLocalDescription error", error);
-//       });
-//     }, error => {
-//       console.log("createOffer error", error);
-//     });
-//   }
-
-//   pc.onnegotiationneeded = function () {
-//     console.log('onnegotiationneeded');
-//     if (isOffer) {
-//       createOffer();
-//     }
-//   }
-
-//   pc.oniceconnectionstatechange = function(event) {
-//     console.log('oniceconnectionstatechange', event.target.iceConnectionState);
-//     if (event.target.iceConnectionState === 'completed') {
-//       setTimeout(() => {
-//         getStats();
-//       }, 1000);
-//     }
-//     if (event.target.iceConnectionState === 'connected') {
-//       createDataChannel();
-//     }
-//   };
-//   pc.onsignalingstatechange = function(event) {
-//     console.log('onsignalingstatechange', event.target.signalingState);
-//   };
-
-//   pc.onaddstream = function (event) {
-//     console.log('onaddstream', event.stream);
-//     container.setState({info: 'One peer join!'});
-
-//     const remoteList = container.state.remoteList;
-//     remoteList[socketId] = event.stream.toURL();
-//     container.setState({ remoteList: remoteList });
-//   };
-//   pc.onremovestream = function (event) {
-//     console.log('onremovestream', event.stream);
-//   };
-
-//   pc.addStream(localStream);
-//   function createDataChannel() {
-//     if (pc.textDataChannel) {
-//       return;
-//     }
-//     const dataChannel = pc.createDataChannel("text");
-
-//     dataChannel.onerror = function (error) {
-//       console.log("dataChannel.onerror", error);
-//     };
-
-//     dataChannel.onmessage = function (event) {
-//       console.log("dataChannel.onmessage:", event.data);
-//       container.receiveTextData({user: socketId, message: event.data});
-//     };
-
-//     dataChannel.onopen = function () {
-//       console.log('dataChannel.onopen');
-//       container.setState({textRoomConnected: true});
-//     };
-
-//     dataChannel.onclose = function () {
-//       console.log("dataChannel.onclose");
-//     };
-
-//     pc.textDataChannel = dataChannel;
-//   }
-//   return pc;
-// }
-
-// function exchange(data) {
-//   const fromId = data.from;
-//   let pc;
-//   if (fromId in pcPeers) {
-//     pc = pcPeers[fromId];
-//   } else {
-//     pc = createPC(fromId, false);
-//   }
-
-//   if (data.sdp) {
-//     console.log('exchange sdp', data);
-//     pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
-//       if (pc.remoteDescription.type == "offer")
-//         pc.createAnswer(function(desc) {
-//           console.log('createAnswer', desc);
-//           pc.setLocalDescription(desc, function () {
-//             console.log('setLocalDescription', pc.localDescription);
-//             socket.emit('exchange', {'to': fromId, 'sdp': pc.localDescription });
-//           }, error => {
-//             console.log("setLocalDescription error", error);
-//           });
-//         }, error => {
-//           console.log("createAnswer error", error);
-//         });
-//     }, error => {
-//       console.log("setRemoteDescription error", error);
-//     });
-//   } else {
-//     console.log('exchange candidate', data);
-//     pc.addIceCandidate(new RTCIceCandidate(data.candidate));
-//   }
-// }
-
-// function leave(socketId) {
-//   console.log('leave', socketId);
-//   const pc = pcPeers[socketId];
-//   const viewIndex = pc.viewIndex;
-//   pc.close();
-//   delete pcPeers[socketId];
-//   console.log('remoteList before: ', container.state.remoteList)
-
-//   const remoteList = container.state.remoteList;
-//   delete remoteList[socketId]
-
-//   console.log('remoteList After: ', container.state.remoteList)
-//   // container.setState({ remoteList: remoteList, info: 'One peer leave!' });
-//   container.setState({ remoteList: remoteList });
-//   container.setState({info: 'One peer leave!'});
-// }
-
-// socket.on('exchange', function(data){
-//   exchange(data);
-// });
-// socket.on('leave', function(socketId){
-//   leave(socketId);
-// });
-
-// socket.on('connect', function(data) {
-//   console.log('connect');
-//   getLocalStream(true, function(stream) {
-//     localStream = stream;
-//     container.setState({selfViewSrc: stream.toURL(), status: 'ready', info: 'Please enter or create room ID'});
-//     // container.setState({selfViewSrc: stream.toURL()});
-//     // container.setState({status: 'ready', info: 'Please enter or create room ID'});
-//   });
-// });
-
-// function mapHash(hash, func) {
-//   const array = [];
-//   for (const key in hash) {
-//     const obj = hash[key];
-//     array.push(func(obj, key));
-//   }
-//   return array;
-// }
-
-// function getStats() {
-//   const pc = pcPeers[Object.keys(pcPeers)[0]];
-//   if (pc.getRemoteStreams()[0] && pc.getRemoteStreams()[0].getAudioTracks()[0]) {
-//     const track = pc.getRemoteStreams()[0].getAudioTracks()[0];
-//     console.log('track', track);
-//     pc.getStats(track, function(report) {
-//       console.log('getStats report', report);
-//     }, error => {
-//       console.log("getStats error", error);
-//     });
-//   }
-// }
-
-// let container;
 
 export default class Video extends Component {
   constructor(props) {
@@ -286,14 +56,14 @@ export default class Video extends Component {
       countDown: true,
     }
     // const configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
-    this.socket = io.connect('https://react-native-webrtc.herokuapp.com', {transports: ['websocket']});
     this.localStream = null;
     this._timeOut = this._timeOut.bind(this)
-
+    
   }
-
+  
   componentDidMount() {
     container = this;
+    this.socket = io('13.57.52.97:3000');
 
     this.socket.on('connect', function(data) {
       console.log('this is connect data: ', data)
@@ -355,6 +125,9 @@ export default class Video extends Component {
     });
   }
 
+  // try making the server to return one of these
+    // first user & the last user
+    // last two users
   join = (roomID) => {
     this.socket.emit('join', roomID, function(socketIds){
       console.log('join', socketIds);
@@ -763,3 +536,80 @@ const styles = StyleSheet.create({
         </View>
       </ScrollView>
 */
+
+
+///////
+
+export default class Video extends Component {
+  constructor(props) {
+    super(props);
+    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
+    this.state = {
+      info: 'Initializing',
+      status: 'init',
+      roomID: '',
+      isFront: true,
+      selfViewSrc: null,
+      remoteList: {},
+      textRoomConnected: false,
+      textRoomData: [],
+      textRoomValue: '',
+      configuration: {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]},
+      pcPeers: {},
+      to: null,
+      from: null,
+      countDown: true,
+    }
+    // these two things should be the same 
+    // might not even need the second option
+    const roomId = this.props.location.state.id || this.props.socketID
+    // const configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
+    this.socket = io.connect('https://react-native-webrtc.herokuapp.com', { 
+      transports: ['websocket'],
+      query: `roomId=${roomId}`
+    });
+    this.localStream = null;
+    this._timeOut = this._timeOut.bind(this)
+
+  }
+
+  componentDidMount() {
+    container = this;
+
+    this.socket.on('connect', function(data) {
+      console.log('this is connect data: ', data)
+      container.getLocalStream(true, function(stream) {
+        console.log('this is stream: ', stream)
+        container.localStream = stream;
+        container.setState({selfViewSrc: stream.toURL(), status: 'ready', info: 'Please enter or create room ID'});
+        // container.setState({selfViewSrc: stream.toURL()});
+        // container.setState({status: 'ready', info: 'Please enter or create room ID'});
+      });
+    });
+
+    this.socket.on('exchange', function(data){
+      console.log('this is exchange data: ', data)
+      container.state.to = data.to;
+      container.state.from = data.from;
+      console.log('this is to and from in state: ', container.state.to, container.state.from)
+      
+      container.exchange(data);
+    });
+    this.socket.on('leave', function(socketId){
+      container.leave(socketId);
+    });
+
+  }
+
+  // START OF MY SHIT 
+  componentWillUnmount() {
+    // however you have this setup
+    this.socket.emit('disconnect')
+    // not entirely sure if this is the case
+    // does popping off the history queue return a component with the same state?
+    // if not, i'll have to pass the previous 6 person room id prop down and use it to join the same 6 person room
+    // as well as the ID of the this room too
+    // pass back a prop just to say this is not the user's first visit to the big room 
+    this.props.history.pop()
+  }
+  // END OF MY SHIT
