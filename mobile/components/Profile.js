@@ -28,7 +28,7 @@ class Profile extends Component {
           <Button 
             large
             icon={{name: 'envira', type: 'font-awesome'}}
-            title = 'Edit'
+            title = 'Add Interest'
             onPress = {() => navigate('Edit')} />
         </View>
       </View>

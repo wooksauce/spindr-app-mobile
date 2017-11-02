@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, StatusBar } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, StatusBar, TouchableHighlight } from 'react-native';
 import { 
   Card, 
   ListItem, 
@@ -11,14 +11,32 @@ class Edit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInterests: []
+      userInterests: [],
+      toggled: false,
     }
   }
 
-  addInterest = (interest) => {
+  selectInterest = (interest) => {
+    let current;
+    if(this.state[interest] === undefined) {
+      current = interest;
+      this.setState({ [interest]: false });
+      console.log('dynamic event state created')
+    }
+    console.log('this is this checking: ', this.state)
     if (!this.state.userInterests.includes(interest)) {
       this.state.userInterests.push(interest);
+      this.setState({ [interest]: !this.state[interest] })
       console.log('Added', interest);
+      console.log('this is interest checking: ', this.state.userInterests)
+      console.log('this is toggle checking: ', this.state.toggled)
+    } else if (this.state.userInterests.includes(interest)) {
+      let index = this.state.userInterests.indexOf(interest);
+      this.state.userInterests.splice(index, 1);
+      this.setState({ [interest]: !this.state[interest] })
+      console.log('Removed', interest);
+      console.log('this is interest checking: ', this.state.userInterests)
+      console.log('this is toggle checking: ', this.state.toggled)
     }
   }
 
@@ -30,33 +48,21 @@ class Edit extends Component {
     return (
       <View Style={styles.container}>
       <ScrollView>
-        <StatusBar
-        barStyle='light-content'/>
-        {/* {interests.map((interest, i) =>
-          <Text
-          key={i} 
-          style={styles.text}
-          onPress={() => this.addInterest(interest)}
-          >{ interest }</Text>)}
-          <Button
-          title = 'Save'
-          onPress = {() => this.saveInterests()} /> */}
-          
+        <StatusBar barStyle='light-content'/>
           <Card title="Interest">
           <ScrollView contentContainerStyle={styles.interestSection}>
           {
             interests.map((interest, i) => {
               return (
-                <Card key={i} containerStyle={styles.interest}>
-                {/* <View> */}
-                  <Text 
-                  style={styles.text}
-                  onPress={() => this.addInterest(interest)}
-                  >
-                  { interest }
-                  </Text>
-                {/* </View> */}
-                </Card>
+                <TouchableHighlight key={i} underlayColor='transparent' onPress={() => {this.selectInterest(interest)}}>
+                  <View >
+                    <Card containerStyle={[this.state[interest] ? styles.interestOn : styles.interestOff]}>
+                      <Text style={[this.state[interest] ? styles.textOn : styles.textOff]}>
+                        { interest }
+                      </Text>
+                    </Card>
+                  </View>
+                </TouchableHighlight>
               );
             })
           }
@@ -82,12 +88,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  interest: {
+  interestOn: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: '#FF5A5F',
+  },
+  interestOff: {
     margin: 10,
     padding: 10,
   },
-  text: {
+  textOn: {
     fontSize: 16,
+    color: 'white',
+  },
+  textOff: {
+    fontSize: 16,
+  },
+  overlay: {
+    alignItems:'center'
   },
 });
 
