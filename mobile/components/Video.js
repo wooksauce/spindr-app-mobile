@@ -1,3 +1,4 @@
+/*
 import React, { Component } from 'react';
 import CountdownCircle from 'react-native-countdown-circle'
 import {
@@ -537,8 +538,7 @@ const styles = StyleSheet.create({
       </ScrollView>
 */
 
-
-///////
+/*
 
 export default class Video extends Component {
   constructor(props) {
@@ -612,4 +612,5 @@ export default class Video extends Component {
     // pass back a prop just to say this is not the user's first visit to the big room 
     this.props.history.pop()
   }
-  // END OF MY SHIT
+  // END OF MY 
+  */

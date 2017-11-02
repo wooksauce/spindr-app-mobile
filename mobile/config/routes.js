@@ -5,7 +5,7 @@ import Login from '../components/Login';
 import Main from '../components/Main';
 import Profile from '../components/Profile';
 import Matches from '../components/Matches';
-import Video from '../components/Video';
+// import Video from '../components/Video';
 import Edit from '../components/Edit';
 import Ready from '../components/Ready';
 
@@ -20,7 +20,7 @@ const Routes = {
   Main: { screen: Main },
   Profile: { screen: Profile },
   Matches: { screen: Matches },
-  Video: { screen: Video },
+  // Video: { screen: Video },
   Edit: { screen: Edit },
   Ready: { screen: Ready }
 }

@@ -4,22 +4,26 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import io from 'socket.io-client';
 
 class Ready extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       srms: []
     }
   }
 
-  receiveSrms = (serverSrms) => {
-    console.log(serverSrms)
-    this.setState({srms: serverSrms})
-  }
+  // receiveSrms = (serverSrms) => {
+  //   console.log(serverSrms)
+  //   this.setState({srms: serverSrms})
+  // }
 
   componentDidMount(){
-    this.socket = io('localhost:3000');
+    console.log('ready mounted')
+    this.socket = io('http://13.57.52.97:3000');
     this.socket.emit('inHolding', this.props.userId);
-    this.socket.on('readyWaiting', receiveSrms(room));
+    this.socket.on('readyWaiting', room => {
+      console.log(room)
+      this.setState({srms: room})
+    });
 
   }
 
@@ -34,11 +38,11 @@ class Ready extends Component {
 
 const InHoldingState = (store) => {
   return {
-    userId = store.Auth.userId
+    userId: store.Auth.userId
   }
 }
 
-export default connect(InholdingState, null)(Ready);
+export default connect(InHoldingState, null)(Ready);
 
 
 ////;;
