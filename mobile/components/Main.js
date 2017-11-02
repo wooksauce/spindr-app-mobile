@@ -16,7 +16,16 @@ class Main extends Component {
     console.log('this is user id: ', this.props)
     axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
     .then(info => {
-      this.setState({ userInfo : info.data });
+      let fake = {	
+        "id": "416",
+        "sex" : "m",
+        "social_score": "10",
+        "interests": ["b", "c"],
+        "match_social_score": "10",
+        "match_interests": "45",
+        "match_weighted_interests": {"a": 0.2, "b":0.3}
+      }
+      this.setState({ userInfo : fake });
       console.log('UserInfo:', this.state.userInfo);
     })
     .then(() => {

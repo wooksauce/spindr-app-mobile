@@ -2,7 +2,7 @@ import Dummy from '../components/Dummy';
 import Main from '../components/Main';
 import Profile from '../components/Profile';
 import Matches from '../components/Matches';
-import Video from '../components/Video';
+// import Video from '../components/Video';
 import Edit from '../components/Edit';
 <<<<<<< refs/remotes/upstream/master
 import Like from '../components/Like';
