@@ -4,8 +4,12 @@ import Profile from '../components/Profile';
 import Matches from '../components/Matches';
 import Video from '../components/Video';
 import Edit from '../components/Edit';
+<<<<<<< refs/remotes/upstream/master
 import Like from '../components/Like';
 import Chat from '../components/Chat';
+=======
+import Ready from '../components/Ready';
+>>>>>>> ignore the changes in Video / tentatively implemented Ready page
 
 const stackRoutes = {
   Home: { screen: Main, 
