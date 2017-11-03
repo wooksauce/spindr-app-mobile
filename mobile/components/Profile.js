@@ -21,7 +21,6 @@ class Profile extends Component {
           </View>
         <View style={styles.profileInfo}>
           <Text style={styles.infoUsername}>{this.props.username}</Text>
-          <Text style={styles.infoGender}>{this.props.gender}</Text>
           <Text style={styles.infoEmail}>{this.props.email}</Text>
         </View>
         <View style={styles.editBtn}>

@@ -4,7 +4,6 @@ import LinearGradient from 'react-native-linear-gradient'
 
 class Loading extends Component {
   render() {
-    console.log('you are in the loading component')
     return (
       <LinearGradient colors={['#FF5A5F', '#FF5A5F', '#EE8426']} style={styles.linearGradient}>
         <StatusBar
