@@ -1,6 +1,6 @@
 const Interests = [
-  'music', 'art', 'hiking', 'sports', 'coffee', 'reading', 'food', 'cooking', 'politics', 'science', 'movies', 'tv', 'fashion', 'traveling', 'theater',
-  'gaming', 'skiing', 'snowboarding', 'fitness', 'dancing', 'netflix and chill', 'personal finance', 'chinese people', 'yoga', 'outdoors', 'comics', 'technology', 'vaping'
+  'Music', 'Art', 'Hiking', 'Sports', 'Coffee', 'Reading', 'Food', 'Cooking', 'Politics', 'Science', 'Movies', 'Tv', 'Fashion', 'Traveling', 'Theater',
+  'Gaming', 'Skiing', 'Snowboarding', 'Fitness', 'Dancing', 'Netflix and Chill', 'Personal Finance', 'Yoga', 'Outdoors', 'Comics', 'Technology', 'Vaping'
 ]
 
 export default Interests;

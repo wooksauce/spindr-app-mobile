@@ -43,7 +43,7 @@ class Video extends Component {
       info: 'Initializing',
       status: 'init',
       username: this.props.username,
-      roomID: 'Test',
+      roomID: '',
       isFront: true,
       selfViewSrc: null,
       remoteList: {},
@@ -60,7 +60,6 @@ class Video extends Component {
     this.socket = io.connect('https://react-native-webrtc.herokuapp.com', {transports: ['websocket']});
     this.localStream = null;
     this._timeOut = this._timeOut.bind(this)
-
   }
 
   componentDidMount() {
@@ -385,18 +384,8 @@ class Video extends Component {
       // this.leave(this.state.from)
       // this.setState({from: null, to: null, status: 'ready', info: 'Please enter or create room ID', roomId: '', textRoomConnected: false})
 
-
-      // container.getLocalStream(true, function(stream) {
-      //   container.localStream = stream;
-      //   container.setState({selfViewSrc: null,remoteList: {}})
-      //   container.setState({selfViewSrc: stream.toURL()});
-      //   container.setState({status: 'ready'});
-      //   container.setState({status: 'connect', info: 'Connecting'});
-      //   container.setState({roomID: 'Test2', countDown: false});
-      //   container.join(container.state.roomID);
-      // });
-
       container.getLocalStream(true, function(stream) {
+        container.props.navigation.navigate('Like')
         container.localStream = stream;
         container.setState({selfViewSrc: null,remoteList: {}})
         container.setState({selfViewSrc: stream.toURL()});
@@ -453,7 +442,7 @@ class Video extends Component {
            color="#ff003f"
            bgColor="#fff"
            textStyle={{ fontSize: 20 }}
-           onTimeElapsed={() => navigate('Like')}
+           onTimeElapsed={() => this._timeOut()}
        /> : null}
          </Text>
         {this.state.info === 'One peer leave!' ? 

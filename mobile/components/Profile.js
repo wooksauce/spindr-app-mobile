@@ -20,15 +20,17 @@ class Profile extends Component {
             rounded />
           </View>
         <View style={styles.profileInfo}>
-          <Text>{this.props.username}</Text>
-          <Text>{this.props.gender}</Text>
-          <Text>{this.props.email}</Text>
+          <Text style={styles.infoUsername}>{this.props.username}</Text>
+          <Text style={styles.infoEmail}>{this.props.email}</Text>
         </View>
         <View style={styles.editBtn}>
           <Button 
-            large
-            icon={{name: 'envira', type: 'font-awesome'}}
-            title = 'Edit'
+            raised
+            fontSize = {26}
+            containerViewStyle={{paddingTop: 20,paddingBottom: 20}}
+            buttonStyle={styles.addInterestBtn}
+            icon={{name: 'book', type: 'font-awesome'}}
+            title = 'Add Interest'
             onPress = {() => navigate('Edit')} />
         </View>
       </View>
@@ -53,9 +55,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 50,
   },
+  infoUsername: {
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  infoGender: {
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  infoEmail: {
+    textAlign: 'center',
+    fontSize: 20,
+  },
   editBtn: {
     flex:1,
     alignItems: 'center',
+  },
+  addInterestBtn: {
+    borderRadius: 10,
+    backgroundColor: '#FF5A5F',
   }
 
 });
