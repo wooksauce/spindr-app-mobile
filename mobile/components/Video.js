@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import CountdownCircle from 'react-native-countdown-circle'
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as videoActions from '../actions/videoActions';
 import {
   StyleSheet,
   Text,
@@ -400,7 +402,10 @@ class Video extends Component {
         container.setState({selfViewSrc: stream.toURL()});
         container.setState({status: 'ready'});
         container.setState({status: 'connect', info: 'Connecting'});
+        // call switchRooms here to set roomId
         container.setState({roomID: 'Test2', countDown: false});
+
+        // check store's rooms.length first
         container.join(container.state.roomID);
       });
       console.log('this is state checking after timeout: ', this.state)
@@ -526,4 +531,10 @@ const VideoState = (store) => {
   }
 };
 
-export default connect(VideoState)(Video);
+const videoDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(videoActions, dispatch)
+  }
+}
+
+export default connect(VideoState, videoDispatch)(Video);
