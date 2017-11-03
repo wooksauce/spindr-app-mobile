@@ -68,10 +68,14 @@ class Edit extends Component {
           }
            </ScrollView>
            <Button
-          title = 'Save'
-          onPress = {() => this.saveInterests()} />
+            raised
+            fontSize = {26}
+            containerViewStyle={{paddingTop: 20,paddingBottom: 20}}
+            buttonStyle={styles.saveBtn}
+            title = 'Save'
+            onPress = {() => this.saveInterests()} />
           </Card>
-      </ScrollView>
+        </ScrollView>
       </View>
     );
   }
@@ -107,6 +111,10 @@ const styles = StyleSheet.create({
   overlay: {
     alignItems:'center'
   },
+  saveBtn: {
+    borderRadius: 10,
+    backgroundColor: '#FF5A5F',
+  }
 });
 
 export default Edit;

@@ -26,8 +26,11 @@ class Profile extends Component {
         </View>
         <View style={styles.editBtn}>
           <Button 
-            large
-            icon={{name: 'envira', type: 'font-awesome'}}
+            raised
+            fontSize = {26}
+            containerViewStyle={{paddingTop: 20,paddingBottom: 20}}
+            buttonStyle={styles.addInterestBtn}
+            icon={{name: 'book', type: 'font-awesome'}}
             title = 'Add Interest'
             onPress = {() => navigate('Edit')} />
         </View>
@@ -69,6 +72,10 @@ const styles = StyleSheet.create({
   editBtn: {
     flex:1,
     alignItems: 'center',
+  },
+  addInterestBtn: {
+    borderRadius: 10,
+    backgroundColor: '#FF5A5F',
   }
 
 });

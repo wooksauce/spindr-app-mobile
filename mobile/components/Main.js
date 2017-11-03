@@ -1,54 +1,89 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TouchableHighlight } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  StatusBar, 
+  Image, 
+  TouchableHighlight, 
+  TouchableWithoutFeedback,
+  Animated, 
+  Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 import Video from './Video';
+
+const { width, height } = Dimensions.get('window');
+const size = Math.min(width, height) - 1;
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userInfo: {},
+      scale: new Animated.Value(0)
     }
   }
 
-  readyToPlay = () => {
-    axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
-    .then(info => {
-      this.setState({ userInfo : info.data });
-      console.log('UserInfo:', this.state.userInfo);
-    })
-    .then(() => {
-      this.postToFlask();
-    })
-    .catch(err => {
-      console.log('Fetch err:', err);
-    })
+  animateOnPress = () => {
+    Animated.timing(this.state.scale, {
+      toValue: 6,
+      duration: 600,
+    }).start(() => {
+      this.setState({
+        scale: new Animated.Value(0)
+      });
+      this.props.navigation.navigate('Video');
+    });
   }
 
-  postToFlask = () => {
-    axios.post('http://13.57.39.204/', this.state.userInfo)
-    .then(() => {
-      console.log('Posted to flask:', this.state.userInfo);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
+  // readyToPlay = () => {
+  //   axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
+  //   .then(info => {
+  //     this.setState({ userInfo : info.data });
+  //     console.log('UserInfo:', this.state.userInfo);
+  //   })
+  //   .then(() => {
+  //     this.postToFlask();
+  //   })
+  //   .catch(err => {
+  //     console.log('Fetch err:', err);
+  //   })
+  // }
+
+  // postToFlask = () => {
+  //   axios.post('http://13.57.39.204/', this.state.userInfo)
+  //   .then(() => {
+  //     console.log('Posted to flask:', this.state.userInfo);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   })
+  // }
 
   render() {
     const { navigate } = this.props.navigation;
     console.log('this is props in Main: ', this.props)
     return (
       <View style={styles.container}>
-        <StatusBar
-        barStyle='light-content'/>
-        <TouchableHighlight  onPress = {() => {this.readyToPlay(), navigate('Video')}}>
+        <StatusBar barStyle='light-content'/>
+        <Animated.View style={{
+          position: 'absolute',
+          backgroundColor: '#FFB2B4',
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          transform: [{
+            scale: this.state.scale
+          }]
+        }} />
+         {/* <TouchableWithoutFeedback  onPress = {() => {this.readyToPlay(), this.animateOnPress()}}> */}
+        <TouchableWithoutFeedback  onPress = {() => {this.animateOnPress()}}>
           <Image
           style={styles.join}
           source={require('../images/Join.png')}
           />
-        </TouchableHighlight>
+        </TouchableWithoutFeedback>
         {/* <Button
         title = 'Ready'
         buttonStyle={styles.readyBtn}
