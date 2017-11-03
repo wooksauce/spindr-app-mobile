@@ -11,6 +11,7 @@ class Stack extends React.Component {
   }
 
   render() {
+    console.log('this is appNav: ', this.props)
     return (
       <StackNav navigation={addNavigationHelpers({
         dispatch: this.props.dispatch,

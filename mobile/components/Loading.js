@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button, Image, StatusBar } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient'
 
 class Loading extends Component {
   render() {
-    console.log('you are in the loading component')
     return (
-      <View style={styles.container}>
+      <LinearGradient colors={['#FF5A5F', '#FF5A5F', '#EE8426']} style={styles.linearGradient}>
         <StatusBar
         barStyle='light-content'/>
         <Image
         style={styles.logo}
         source={require('../images/Logo.png')}
-      />
-      </View>
+        />
+      </LinearGradient>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  linearGradient: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FF5A5F',
+    borderRadius: 5,
   },
   logo: {
     alignItems: 'center',
