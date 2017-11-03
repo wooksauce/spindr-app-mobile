@@ -9,15 +9,8 @@ class Main extends Component {
     super(props);
     this.state = {
       userInfo: {},
-    }
-  }
-
-  readyToPlay = () => {
-    console.log('this is user id: ', this.props)
-    axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
-    .then(info => {
-      let fake = {	
-        "id": "416",
+      fake: {
+        "id": "3",
         "sex" : "m",
         "social_score": "10",
         "interests": ["b", "c"],
@@ -25,7 +18,14 @@ class Main extends Component {
         "match_interests": "45",
         "match_weighted_interests": {"a": 0.2, "b":0.3}
       }
-      this.setState({ userInfo : fake });
+    }
+  }
+
+  readyToPlay = () => {
+    console.log('this is user id: ', this.props)
+    axios.get(`http://13.57.52.97:3000/api/userId/${this.props.passUserId}`)
+    .then(info => {
+      this.setState({ userInfo : this.state.fake });
       console.log('UserInfo:', this.state.userInfo);
     })
     .then(() => {
@@ -37,12 +37,16 @@ class Main extends Component {
   }
   //
   postToFlask = () => {
-    axios.post('http://13.57.39.204', this.state.userInfo)
+    console.log('im in posttoflask', this.state.userInfo)
+    axios.post('http://54.153.58.44:5000/',  this.state.userInfo, {
+      headers: {
+        'Content-Type': 'application/json'
+      }})
     .then(() => {
       console.log('Posted to flask:', this.state.userInfo);
     })
     .catch(err => {
-      console.log(err);
+      console.log('posttoflask err', err);
     })
   }
 
