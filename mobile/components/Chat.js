@@ -18,14 +18,14 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.socket = SocketIOClient('http://localhost:3000');
+    this.socket = SocketIOClient('http://13.57.52.97:3000');
     this.socket.on('message', this.onSend);
     this.socket.on('roomExists', this.fetchLogs);
     this.socket.emit('joinRoom', this.props.userId, this.fakeMatchId);
   }
 
   fetchLogs() {
-    axios.get('http://localhost:3000/api/chats')
+    axios.get('http://13.57.52.97:3000/api/chats')
       .then(logs => {
         console.log('FETCHED LOGS:', logs);
         const getRes = logs.data;
